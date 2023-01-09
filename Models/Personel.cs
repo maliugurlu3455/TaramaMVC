@@ -14,8 +14,8 @@ namespace TaramaMVC.Models
         [StringLength(50)]
         public string SurName { get; set; }
 
-        public int AId { get; set; }
-        public AnaBilimDali AnaBilimDali { get; set; }
+        public int AnaBilimDallariId { get; set; }
+        public  AnaBilimDali AnaBilimDallari { get; set; }
   
 
     }

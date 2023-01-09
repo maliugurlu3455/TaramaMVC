@@ -11,16 +11,16 @@ namespace TaramaMVC.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "AnaBilimDalis",
+                name: "AnaBilimDals",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AnaBilimDalis", x => x.Id);
+                    table.PrimaryKey("PK_AnaBilimDals", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -29,26 +29,25 @@ namespace TaramaMVC.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    SurName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    AId = table.Column<int>(type: "int", nullable: false),
-                    AnaBilimDaliId = table.Column<int>(type: "int", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    SurName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    AnaBilimDallariId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Personels", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Personels_AnaBilimDalis_AnaBilimDaliId",
-                        column: x => x.AnaBilimDaliId,
-                        principalTable: "AnaBilimDalis",
+                        name: "FK_Personels_AnaBilimDals_AnaBilimDallariId",
+                        column: x => x.AnaBilimDallariId,
+                        principalTable: "AnaBilimDals",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Personels_AnaBilimDaliId",
+                name: "IX_Personels_AnaBilimDallariId",
                 table: "Personels",
-                column: "AnaBilimDaliId");
+                column: "AnaBilimDallariId");
         }
 
         /// <inheritdoc />
@@ -58,7 +57,7 @@ namespace TaramaMVC.Migrations
                 name: "Personels");
 
             migrationBuilder.DropTable(
-                name: "AnaBilimDalis");
+                name: "AnaBilimDals");
         }
     }
 }

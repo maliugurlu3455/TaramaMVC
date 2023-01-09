@@ -21,9 +21,7 @@ namespace TaramaMVC.Controllers
         // GET: Kadromuz
         public async Task<IActionResult> Index()
         {
-              return _context.AnaBilimDals != null ? 
-                          View(await _context.AnaBilimDals.ToListAsync()) :
-                          Problem("Entity set 'DatabaseContext.AnaBilimDals'  is null.");
+              return View(await _context.AnaBilimDals.ToListAsync());
         }
 
         // GET: Kadromuz/Details/5
@@ -156,7 +154,7 @@ namespace TaramaMVC.Controllers
 
         private bool AnaBilimDaliExists(int id)
         {
-          return (_context.AnaBilimDals?.Any(e => e.Id == id)).GetValueOrDefault();
+          return _context.AnaBilimDals.Any(e => e.Id == id);
         }
     }
 }

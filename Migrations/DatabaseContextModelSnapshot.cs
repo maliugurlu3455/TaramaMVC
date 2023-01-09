@@ -30,13 +30,12 @@ namespace TaramaMVC.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("AnaBilimDalis", (string)null);
+                    b.ToTable("AnaBilimDals");
                 });
 
             modelBuilder.Entity("TaramaMVC.Models.Personel", b =>
@@ -47,43 +46,38 @@ namespace TaramaMVC.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AnaBilimDaliId")
+                    b.Property<int>("AnaBilimDallariId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("SurName")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AnaBilimDaliId");
+                    b.HasIndex("AnaBilimDallariId");
 
-                    b.ToTable("Personels", (string)null);
+                    b.ToTable("Personels");
                 });
 
             modelBuilder.Entity("TaramaMVC.Models.Personel", b =>
                 {
-                    b.HasOne("TaramaMVC.Models.AnaBilimDali", "AnaBilimDali")
-                        .WithMany("Personels")
-                        .HasForeignKey("AnaBilimDaliId")
+                    b.HasOne("TaramaMVC.Models.AnaBilimDali", "AnaBilimDallari")
+                        .WithMany("Personeller")
+                        .HasForeignKey("AnaBilimDallariId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("AnaBilimDali");
+                    b.Navigation("AnaBilimDallari");
                 });
 
             modelBuilder.Entity("TaramaMVC.Models.AnaBilimDali", b =>
                 {
-                    b.Navigation("Personels").IsRequired(false);
+                    b.Navigation("Personeller");
                 });
 #pragma warning restore 612, 618
         }

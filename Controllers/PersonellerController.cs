@@ -21,9 +21,9 @@ namespace TaramaMVC.Controllers
         // GET: Personeller
         public async Task<IActionResult> Index()
         {
-              return _context.Personels != null ? 
-                          View(await _context.Personels.ToListAsync()) :
-                          Problem("Entity set 'DatabaseContext.Personels'  is null.");
+            var databaseContext = _context.Personels.Include(p => p.AnaBilimDallari);
+            
+            return View(await databaseContext.ToListAsync());
         }
 
         // GET: Personeller/Details/5
@@ -35,6 +35,7 @@ namespace TaramaMVC.Controllers
             }
 
             var personel = await _context.Personels
+                .Include(p => p.AnaBilimDallari)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (personel == null)
             {
@@ -47,6 +48,7 @@ namespace TaramaMVC.Controllers
         // GET: Personeller/Create
         public IActionResult Create()
         {
+            ViewData["AnaBilimDallariId"] = new SelectList(_context.AnaBilimDals, "Id", "Name");
             return View();
         }
 
@@ -55,7 +57,7 @@ namespace TaramaMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,SurName,AId")] Personel personel)
+        public async Task<IActionResult> Create([Bind("Id,Name,SurName,AnaBilimDallariId")] Personel personel)
         {
             if (ModelState.IsValid)
             {
@@ -63,6 +65,7 @@ namespace TaramaMVC.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["AnaBilimDallariId"] = new SelectList(_context.AnaBilimDals, "Id", "Name", personel.AnaBilimDallariId);
             return View(personel);
         }
 
@@ -79,6 +82,7 @@ namespace TaramaMVC.Controllers
             {
                 return NotFound();
             }
+            ViewData["AnaBilimDallariId"] = new SelectList(_context.AnaBilimDals, "Id", "Name", personel.AnaBilimDallariId);
             return View(personel);
         }
 
@@ -87,7 +91,7 @@ namespace TaramaMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,SurName,AId")] Personel personel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,SurName,AnaBilimDallariId")] Personel personel)
         {
             if (id != personel.Id)
             {
@@ -114,6 +118,7 @@ namespace TaramaMVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["AnaBilimDallariId"] = new SelectList(_context.AnaBilimDals, "Id", "Name", personel.AnaBilimDallariId);
             return View(personel);
         }
 
@@ -126,6 +131,7 @@ namespace TaramaMVC.Controllers
             }
 
             var personel = await _context.Personels
+                .Include(p => p.AnaBilimDallari)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (personel == null)
             {
@@ -156,7 +162,7 @@ namespace TaramaMVC.Controllers
 
         private bool PersonelExists(int id)
         {
-          return (_context.Personels?.Any(e => e.Id == id)).GetValueOrDefault();
+          return _context.Personels.Any(e => e.Id == id);
         }
     }
 }

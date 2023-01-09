@@ -10,6 +10,6 @@ namespace TaramaMVC.Models
         [StringLength(150)]
         public string Name { get; set; }
 
-        public ICollection<Personel> Personels { get; set; }  
+        public ICollection<Personel> Personeller { get; set; }  
     }
 }
