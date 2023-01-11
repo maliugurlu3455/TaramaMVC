@@ -1,43 +1,37 @@
 ﻿@model TaramaMVC.Models.Personel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Akademik Personel Ekleme";
 }
-<div class="row">
-    <div class="col-md-1">
-        <div class="form-group">
-        <label id="Baslik" class="control-label">Personel Bilgileri</label>
-        </div>
-    </div>
-</div>
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+            <div class="form-group md-2 mt-2">
+               @* <label asp-for="Name" class="control-label"></label>*@
+                <input asp-for="Name" class="form-control" placeholder="Name" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="SurName" class="control-label"></label>
-                <input asp-for="SurName" class="form-control" />
+            <div class="form-group md-2 mt-2">
+             @*   <label asp-for="SurName" class="control-label"></label>*@
+                <input asp-for="SurName" class="form-control" placeholder="SurName" />
                 <span asp-validation-for="SurName" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="AnaBilimDallariId" class="control-label"></label>
-                <select asp-for="AnaBilimDallariId" class ="form-control" asp-items="ViewBag.AnaBilimDallariId"></select>
+            <div class="form-group md-2 mt-2">
+              @*  <label asp-for="AnaBilimDallariId" class="control-label"></label>*@
+                <select asp-for="AnaBilimDallariId" class="form-control" asp-items="ViewBag.AnaBilimDallariId" placeholder="AnaBilimDalı"></select>
             </div>
-            <div class="form-group">
+            <div class="form-group md-2 mt-2">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
+@*<div class="row">
     <a asp-action="Index">Back to List</a>
-</div>
+</div>*@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

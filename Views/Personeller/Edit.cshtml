@@ -1,34 +1,30 @@
 ﻿@model TaramaMVC.Models.Personel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Akademik Personel Güncelleme";
 }
 
-<h1>Edit</h1>
-
-<h4>Personel</h4>
-<hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+            <div class="form-group md-2 mt-2">
+             @*   <label asp-for="Name" class="control-label"></label>*@
+                <input asp-for="Name" class="form-control" placeholder="Name" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="SurName" class="control-label"></label>
-                <input asp-for="SurName" class="form-control" />
+            <div class="form-group md-2 mt-2">
+               @* <label asp-for="SurName" class="control-label"></label>*@
+                <input asp-for="SurName" class="form-control" placeholder="SurName" />
                 <span asp-validation-for="SurName" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="AnaBilimDallariId" class="control-label"></label>
-                <select asp-for="AnaBilimDallariId" class="form-control" asp-items="ViewBag.AnaBilimDallariId"></select>
+            <div class="form-group md-2 mt-2">
+                @*<label asp-for="AnaBilimDallariId" class="control-label"></label>*@
+                <select asp-for="AnaBilimDallariId" class="form-control" asp-items="ViewBag.AnaBilimDallariId" placeholder="AnaBilimDalı"></select>
                 <span asp-validation-for="AnaBilimDallariId" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group md-2 mt-2">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
@@ -36,7 +32,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Geri Dön</a>
 </div>
 
 @section Scripts {

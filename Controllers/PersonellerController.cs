@@ -61,6 +61,8 @@ namespace TaramaMVC.Controllers
         {
             if (ModelState.IsValid)
             {
+                //personel.Name = personel.Name;
+                
                 _context.Add(personel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
