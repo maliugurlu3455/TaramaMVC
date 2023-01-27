@@ -1,0 +1,52 @@
+﻿@model TaramaMVC.Models.PersonelYayinBilgileri
+
+@{
+    ViewData["Title"] = "Personel Yayın Bilgileri Güncelleme";
+}
+@*<h4>PersonelYayinBilgileri</h4>
+<hr />*@
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group md-2 mt-2">
+             @*   <label asp-for="Baslik" class="control-label"></label>*@
+                <input asp-for="Baslik" class="form-control" placeholder="Baslik" />
+                <span asp-validation-for="Baslik" class="text-danger"></span>
+            </div>
+            <div class="form-group md-2 mt-2">
+               @* <label asp-for="Alinti" class="control-label"></label>*@
+                <input asp-for="Alinti" class="form-control" placeholder="Alinti" />
+                <span asp-validation-for="Alinti" class="text-danger"></span>
+            </div>
+            <div class="form-group md-2 mt-2">
+               @* <label asp-for="Yil" class="control-label"></label>*@
+                <input asp-for="Yil" class="form-control" placeholder="Yil" />
+                <span asp-validation-for="Yil" class="text-danger"></span>
+            </div>
+            <div class="form-group md-2 mt-2">
+                
+                <select asp-for="PersonelId" class="form-control" asp-items="ViewBag.PersonelId" placeholder="ScholarName"></select>
+             
+                <span asp-validation-for="PersonelId" class="text-danger"></span>
+                
+            </div>
+            <div class="form-group md-2 mt-2">
+               @* <label asp-for="UpdateDate" class="control-label"></label>*@
+                <input asp-for="UpdateDate" class="form-control" placeholder="dd-mm-yyyy" dateformat="dd-mm-yyyy" />
+                <span asp-validation-for="UpdateDate" class="text-danger"></span>
+            </div>
+            <div class="form-group md-2 mt-2">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@*<div>
+    <a asp-action="Index">Back to List</a>
+</div>*@
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -16,7 +16,11 @@ namespace TaramaMVC.Models
 
         public int AnaBilimDallariId { get; set; }
         public  AnaBilimDali AnaBilimDallari { get; set; }
-  
 
+        [StringLength(50)]
+        public string User { get; set; }
+        public int Alintilanma { get; set; }
+        [StringLength(150)]
+        public string ScholarName { get; set; }
     }
 }

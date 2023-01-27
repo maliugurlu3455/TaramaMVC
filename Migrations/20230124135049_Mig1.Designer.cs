@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TaramaMVC.Models;
 
@@ -11,9 +12,11 @@ using TaramaMVC.Models;
 namespace TaramaMVC.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230124135049_Mig1")]
+    partial class Mig1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -84,26 +87,44 @@ namespace TaramaMVC.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Alinti")
+                    b.Property<int?>("PersonelId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Baslik")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PersonelId")
+                    b.Property<int>("UpdateDate")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Yil")
+                    b.Property<int?>("YayinBilgisiId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("PersonelId");
 
+                    b.HasIndex("YayinBilgisiId");
+
                     b.ToTable("PersonelYayinBilgileris", (string)null);
+                });
+
+            modelBuilder.Entity("TaramaMVC.Models.YayinBilgisi", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Alinti")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Baslik")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Yil")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("YayinBilgisi");
                 });
 
             modelBuilder.Entity("TaramaMVC.Models.Personel", b =>
@@ -121,11 +142,15 @@ namespace TaramaMVC.Migrations
                 {
                     b.HasOne("TaramaMVC.Models.Personel", "Personel")
                         .WithMany()
-                        .HasForeignKey("PersonelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PersonelId");
+
+                    b.HasOne("TaramaMVC.Models.YayinBilgisi", "YayinBilgisi")
+                        .WithMany()
+                        .HasForeignKey("YayinBilgisiId");
 
                     b.Navigation("Personel");
+
+                    b.Navigation("YayinBilgisi");
                 });
 
             modelBuilder.Entity("TaramaMVC.Models.AnaBilimDali", b =>

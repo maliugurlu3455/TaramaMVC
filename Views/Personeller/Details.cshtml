@@ -25,9 +25,22 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.AnaBilimDallari.Name)
         </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ScholarName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ScholarName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.User)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.User)
+        </dd>
     </dl>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Düzenle</a> |
-    <a asp-action="Index">Geri Dön</a>
+<div class="row">
+    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-secondary" >Düzenle</a> |
+    <a asp-action="Index" class="btn btn-secondary" >Geri Dön</a>
 </div>

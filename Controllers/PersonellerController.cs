@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using TaramaMVC.Helper;
 using TaramaMVC.Models;
 
 namespace TaramaMVC.Controllers
@@ -48,7 +45,7 @@ namespace TaramaMVC.Controllers
         // GET: Personeller/Create
         public IActionResult Create()
         {
-            ViewData["AnaBilimDallariId"] = new SelectList(_context.AnaBilimDals, "Id", "Name");
+            ViewData["PersonelId"] = new SelectList(_context.Personels, "Id", "Name");
             return View();
         }
 
@@ -57,7 +54,7 @@ namespace TaramaMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,SurName,AnaBilimDallariId")] Personel personel)
+        public async Task<IActionResult> Create([Bind("Id,Name,SurName,AnaBilimDallariId,ScholarName,User,Alintilanma")] Personel personel)
         {
             if (ModelState.IsValid)
             {
@@ -93,7 +90,7 @@ namespace TaramaMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,SurName,AnaBilimDallariId")] Personel personel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,SurName,AnaBilimDallariId,ScholarName,User,Alintilanma")] Personel personel)
         {
             if (id != personel.Id)
             {
@@ -166,5 +163,93 @@ namespace TaramaMVC.Controllers
         {
           return _context.Personels.Any(e => e.Id == id);
         }
+        public async Task<IActionResult> VerileriSil()
+        {
+            string mesaj = "";
+            try
+            {
+                var silinecekler = await _context.PersonelYayinBilgileris.ToListAsync();
+                _context.PersonelYayinBilgileris.RemoveRange(silinecekler);
+                await _context.SaveChangesAsync();
+                mesaj = "Veriler Silindi.";
+            }
+            catch (Exception ex)
+            {
+
+                mesaj = "Hata : "+ ex.Message;
+            }
+            
+            return Content(mesaj);
+        }
+            public async Task<IActionResult> VeriGuncelle()
+        {
+            List<PersonelYayinBilgileri> UserList = new List<PersonelYayinBilgileri>();
+            var databaseContext = _context.Personels.ToList();
+            foreach (var item in databaseContext)
+            {
+               //web servisten kullanıcı bilgilerini al
+                UserList = Helperim.KullaniciBilgileri(item.User);
+                var person = await _context.Personels.FirstOrDefaultAsync(i => i.Id == item.Id);
+                if (UserList!=null && UserList.Count>0)
+                {
+                    foreach (PersonelYayinBilgileri py in UserList)
+                    {
+                        person.Alintilanma = py.Personel.Alintilanma;
+                        py.Personel = person;
+                        py.PersonelId = person.Id;
+                        py.UpdateDate = DateTime.Today;
+
+                        await _context.PersonelYayinBilgileris.AddAsync(py);
+                        _context.Personels.Update(person);
+                    }
+                    await _context.SaveChangesAsync();
+                }
+             
+               
+            }
+            return RedirectToAction("Index");
+        }
+            public IActionResult Getir()
+        {
+            //string UserId = "";VeriGuncelle
+            string[] UserId = new string[3] { string.Empty, string.Empty, string.Empty };
+            var databaseContext = _context.Personels.ToList();
+            foreach (var item in databaseContext)
+            {
+                //UserId = Helperim.GetUserId(item.ScholarName);
+                UserId = Helperim.GetUserId(item.User,true);
+                var person = _context.Personels.FirstOrDefault(i => i.Id == item.Id);
+                person.User = UserId[0];
+                person.Alintilanma=Convert.ToInt32(!string.IsNullOrEmpty(UserId[1])? UserId[1]:0);
+                _context.Update(person);
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("Index");
+            //var deger=doc.DocumentNode.SelectSingleNode("//div[@id='gsc_prf_in']");gs_ai_t
+
+            ////çalışıyor
+            // string value = doc.DocumentNode.SelectSingleNode("//span[@class='gs_hlt']").InnerText;
+
+
+            //var query = $"//div[@id='gsc_prf_in']";
+
+            //string tag = doc.GetElementbyId("gsc_prf_in").Name;
+            //string href = doc.GetElementbyId("gsc_prf_in").GetAttributeValue("href", "");
+
+            //gs_ai_t
+            //string value = doc.DocumentNode.SelectSingleNode("//h3[@class = 'gs_ai_name']").InnerHtml;
+
+            //foreach (var item in nodesWithARef)
+            //{
+            //   string value2= item.GetAttributeValue("href", "");
+            //}
+
+            //var link = nod.SelectNodes("//link[@href]").FirstOrDefault();
+            //// you can also check if link is not null
+            //var href = link.Attributes["href"].Value; // "anotherstyle7.css"
+
+        }
+
     }
 }

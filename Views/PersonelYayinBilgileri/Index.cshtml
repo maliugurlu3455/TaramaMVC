@@ -1,0 +1,65 @@
+﻿@model IEnumerable<TaramaMVC.Models.PersonelYayinBilgileri>
+
+@{
+    ViewData["Title"] = "Personel Yayın Bilgileri";
+}
+
+
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table table-bordered table-hover table-striped ">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Baslik)
+            </th>
+              <th>
+                @Html.DisplayNameFor(model => model.BaslikCites)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Alinti)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Yil)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Personel.ScholarName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdateDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Baslik)
+            </td>
+             <td>
+                @Html.DisplayFor(modelItem => item.BaslikCites)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Alinti)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Yil)
+            </td>
+                <td>
+                    <select asp-for=@item.PersonelId class="form-control" asp-items="ViewBag.PersonelId" placeholder="ScholarName"></select>
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdateDate)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

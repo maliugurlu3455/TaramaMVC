@@ -2,11 +2,22 @@
 
 @{
     ViewData["Title"] = "Akademik Kadromuz";
+    int RowNo = 0;
 }
 
-<table class="table table-bordered table-hover table-striped ">
+<div class="text-xxl-start md-2 mt-2">
+
+@*<a class="btn btn-secondary btn-sm" asp-area="" asp-controller="Personeller" asp-action="Getir">Akademik Personel Güncelle</a>
+*@
+    <a class="btn btn-secondary btn-sm" asp-area="" asp-controller="Personeller" asp-action="VeriGuncelle">Akademik Yayın Güncelle</a>
+     <a class="btn btn-secondary btn-sm" asp-area="" asp-controller="Personeller" asp-action="VerileriSil">Akademik Yayınları Sil</a>
+</div>
+<table class="table table-bordered table-hover table-striped md-2 mt-2">
     <thead>
         <tr>
+            <th>
+                @Html.Label("Sıra No")
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
@@ -16,12 +27,23 @@
             <th>
                 @Html.DisplayNameFor(model => model.AnaBilimDallari)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.ScholarName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Alintilanma)
+            </th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
+                <td>@{
+                        RowNo++;
+                    } @RowNo</td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
@@ -31,6 +53,15 @@
             <td>
                     @Html.DisplayFor(modelItem => item.AnaBilimDallari.Name)
             </td>
+                <td>
+                    <a href="https://scholar.google.com/citations?hl=tr&view_op=search_authors&mauthors=@item.ScholarName" target="_blank">@Html.DisplayFor(modelItem => item.ScholarName)</a>
+                </td>
+                 <td>
+                    @Html.DisplayFor(modelItem => item.User)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Alintilanma)
+                </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Düzenle</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Detaylar</a> |
