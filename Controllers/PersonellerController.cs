@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.Metrics;
 using TaramaMVC.Helper;
 using TaramaMVC.Models;
 
@@ -170,6 +171,9 @@ namespace TaramaMVC.Controllers
             {
                 var silinecekler = await _context.PersonelYayinBilgileris.ToListAsync();
                 _context.PersonelYayinBilgileris.RemoveRange(silinecekler);
+
+                _context.Personels.ExecuteUpdate(p => p.SetProperty(x => x.Alintilanma, x =>0 ));
+                 
                 await _context.SaveChangesAsync();
                 mesaj = "Veriler Silindi.";
             }
@@ -184,7 +188,7 @@ namespace TaramaMVC.Controllers
             public async Task<IActionResult> VeriGuncelle()
         {
             List<PersonelYayinBilgileri> UserList = new List<PersonelYayinBilgileri>();
-            var databaseContext = _context.Personels.ToList();
+            var databaseContext = _context.Personels.Where(r=>r.Name.Contains("slam")).ToList();
             foreach (var item in databaseContext)
             {
                //web servisten kullanıcı bilgilerini al
@@ -208,6 +212,10 @@ namespace TaramaMVC.Controllers
                
             }
             return RedirectToAction("Index");
+        }
+        public IActionResult Test() {
+            string deger = Helperim.AlintiGetir("https://scholar.google.com/scholar?oi=bibs&hl=tr&cites=4986682506114850678");
+            return Content(deger);
         }
             public IActionResult Getir()
         {

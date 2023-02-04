@@ -1,32 +1,50 @@
 ﻿@model TaramaMVC.Models.AnaBilimDali
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Ana Bilim Dalı Düzenleme";
 }
+<div class="container-sm">
+    <div class="table-responsive-sm">
+        <table class="table table-bordered table-hover table-striped align-middle">
+            <thead class="table-light">
+                <tr>
+                <th>
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="Id" />
+                        <label asp-for="Name" class="control-label">Ana Bilim Dalı</label>
 
-<h1>Edit</h1>
+                    </th>
+                 
+                 
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </td>
+                <tr>
+                    <td>
+                     @*   <input type="submit" value="Kaydet" class="form-control btn-secondary" />*@
+                        <button type="submit" class="form-control btn-secondary">
+                            <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#save1" /></svg>
+                            Kaydet
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+            <td>
 
-<h4>AnaBilimDali</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
+                        <a asp-action="Index" class="form-control btn btn-secondary">
+                            <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#back1" /></svg>
+                            Geri
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
 </div>
 
 @section Scripts {

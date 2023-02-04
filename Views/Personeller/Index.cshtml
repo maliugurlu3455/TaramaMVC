@@ -4,19 +4,23 @@
     ViewData["Title"] = "Akademik Kadromuz";
     int RowNo = 0;
 }
+<div class="class="text-sm-start md-2 mt-2">
 
-<div class="text-xxl-start md-2 mt-2">
 
-@*<a class="btn btn-secondary btn-sm" asp-area="" asp-controller="Personeller" asp-action="Getir">Akademik Personel Güncelle</a>
+    @* btn btn-primary btn-block <a class="btn btn-secondary btn-sm" asp-area="" asp-controller="Personeller" asp-action="Getir">Akademik Personel Güncelle</a>
 *@
     <a class="btn btn-secondary btn-sm" asp-area="" asp-controller="Personeller" asp-action="VeriGuncelle">Akademik Yayın Güncelle</a>
-     <a class="btn btn-secondary btn-sm" asp-area="" asp-controller="Personeller" asp-action="VerileriSil">Akademik Yayınları Sil</a>
+    <a class="btn btn-secondary btn-sm" asp-area="" asp-controller="Personeller" asp-action="VerileriSil">Akademik Yayınları Sil</a>
+    <a class="btn btn-secondary btn-sm" asp-area="" asp-controller="Personeller" asp-action="Test">Test</a>
+
 </div>
-<table class="table table-bordered table-hover table-striped md-2 mt-2">
-    <thead>
+<div class="table-responsive-sm">
+<table class="table table-sm table-bordered table-hover table-striped md-2 mt-2">
+        <thead class="table-light">
+           
         <tr>
             <th>
-                @Html.Label("Sıra No")
+                @Html.Label("SıraNo")
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
@@ -54,7 +58,7 @@
                     @Html.DisplayFor(modelItem => item.AnaBilimDallari.Name)
             </td>
                 <td>
-                    <a href="https://scholar.google.com/citations?hl=tr&view_op=search_authors&mauthors=@item.ScholarName" target="_blank">@Html.DisplayFor(modelItem => item.ScholarName)</a>
+                    <a title="https://scholar.google.com/citations?hl=tr&view_op=search_authors&mauthors=@item.ScholarName" href="https://scholar.google.com/citations?hl=tr&user=@item.User" target="_blank">@Html.DisplayFor(modelItem => item.ScholarName)</a>
                 </td>
                  <td>
                     @Html.DisplayFor(modelItem => item.User)
@@ -63,11 +67,20 @@
                     @Html.DisplayFor(modelItem => item.Alintilanma)
                 </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Düzenle</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Detaylar</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Sil</a>
+                        <div class="btn-group btn-group-justified">
+                               <a asp-action="Details" asp-route-id="@item.Id" class="btn-sm btn-block">
+                                <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#view1" /></svg>İncele
+                            </a>
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn-sm btn btn-block">
+                                <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#edit1" /></svg>Düzenle
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn-sm btn-block">
+                                <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#delete1" /></svg>Sil
+                            </a>
+                        </div>
             </td>
         </tr>
 }
     </tbody>
 </table>
+</div>

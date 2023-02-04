@@ -2,21 +2,28 @@
 
 @{
     ViewData["Title"] = "Personel Yayın Bilgileri";
+    int RowNo = 0;
 }
 
 
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table table-bordered table-hover table-striped ">
-    <thead>
+@*<p>
+    <a asp-action="Create">Create New</a>class="align-middle"
+</p>*@
+<div class="container-sm">
+    <div class="table-responsive-sm">
+        <table class="table table-sm table-bordered table-hover table-striped align-middle ">
+            <thead class="table-light align-middle">
         <tr>
+                    <th>
+                        @Html.Label("SıraNo")
+                    </th>
             <th>
                 @Html.DisplayNameFor(model => model.Baslik)
             </th>
-              <th>
+             <th>
                 @Html.DisplayNameFor(model => model.BaslikCites)
+
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Alinti)
@@ -36,30 +43,46 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+                        <td>
+                            @{
+                                RowNo++;
+                            } @RowNo
+                        </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Baslik)
             </td>
-             <td>
-                @Html.DisplayFor(modelItem => item.BaslikCites)
+            <td>
+             <a href=@item.BaslikCites target="_blank">Alıntılanan Makale </a>
+
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Alinti)
             </td>
-            <td>
+                        <td class="align-middle">
                 @Html.DisplayFor(modelItem => item.Yil)
             </td>
-                <td>
-                    <select asp-for=@item.PersonelId class="form-control" asp-items="ViewBag.PersonelId" placeholder="ScholarName"></select>
+                <td >
+                            <select asp-for=@item.PersonelId class="form-control" asp-items="ViewBag.PersonelId" placeholder="ScholarName" readonly></select>
                 </td>
             <td>
                 @Html.DisplayFor(modelItem => item.UpdateDate)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            <div class="btn-group btn-group-justified">
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn-sm btn-block">
+                                    <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#view1" /></svg>İncele
+                                </a>
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn-sm btn btn-block">
+                                    <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#edit1" /></svg>Düzenle
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn-sm btn-block">
+                                    <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#delete1" /></svg>Sil
+                                </a>
+                            </div>
             </td>
         </tr>
 }
     </tbody>
 </table>
+</div>
+</div>

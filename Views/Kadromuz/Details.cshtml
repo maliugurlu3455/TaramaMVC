@@ -1,24 +1,33 @@
 ﻿@model TaramaMVC.Models.AnaBilimDali
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Ana Bilim Dalı İnceleme";
 }
 
-<h1>Details</h1>
 
-<div>
-    <h4>AnaBilimDali</h4>
-    <hr />
+<div class="container-sm">
+
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+             <label asp-for="Name" class="control-label">Ana Bilim Dalı</label>
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
+ 
+        
+        <dd class="col-sm-10">
+            <a asp-action="Edit" asp-route-id="@Model?.Id" class="form-control btn btn-secondary">
+                <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#edit1" /></svg>Düzenle
+                </a>
+        </dd>
+        <dd class="col-sm-10">
+            <a asp-action="Index" class="form-control btn btn-secondary">
+                <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#back1" /></svg>
+                Geri </a>
+        </dd>
     </dl>
+         
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+

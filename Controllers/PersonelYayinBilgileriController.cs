@@ -18,7 +18,11 @@ namespace TaramaMVC.Controllers
            
             _context = context;
         }
-
+        //public async Task<IActionResult> Index(string search)
+        //{
+        //    ViewData["PersonelId"] = new SelectList(_context.Personels, "Id", "ScholarName");
+        //    return View(await _context.PersonelYayinBilgileris.Where(y=>y.Personel.Name==).ToListAsync());
+        //}
         // GET: PersonelYayinBilgileri
         public async Task<IActionResult> Index()
         {

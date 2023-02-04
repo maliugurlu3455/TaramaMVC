@@ -16,6 +16,13 @@
       "files": [
         "jquery-ui.min.js"
       ]
+    },
+    {
+      "library": "jquery@3.6.3",
+      "destination": "wwwroot/jquery/",
+      "files": [
+        "jquery.min.js"
+      ]
     }
   ]
 }
