@@ -22,5 +22,7 @@ namespace TaramaMVC.Models
         public int Alintilanma { get; set; }
         [StringLength(150)]
         public string ScholarName { get; set; }
+
+        
     }
 }

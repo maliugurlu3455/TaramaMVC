@@ -12,8 +12,8 @@ using TaramaMVC.Models;
 namespace TaramaMVC.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20230124135049_Mig1")]
-    partial class Mig1
+    [Migration("20230204220738_v1")]
+    partial class v1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -87,25 +87,32 @@ namespace TaramaMVC.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("PersonelId")
+                    b.Property<int>("Alinti")
                         .HasColumnType("int");
 
-                    b.Property<int>("UpdateDate")
+                    b.Property<string>("Baslik")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BaslikCites")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PersonelId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("YayinBilgisiId")
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Yil")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("PersonelId");
 
-                    b.HasIndex("YayinBilgisiId");
-
-                    b.ToTable("PersonelYayinBilgileris", (string)null);
+                    b.ToTable("PersonelYayinBilgileris");
                 });
 
-            modelBuilder.Entity("TaramaMVC.Models.YayinBilgisi", b =>
+            modelBuilder.Entity("TaramaMVC.Models.YayinAlintiBilgisi", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -113,18 +120,23 @@ namespace TaramaMVC.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Alinti")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Baslik")
+                    b.Property<string>("Ad")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Yil")
+                    b.Property<int?>("PersonelYayinBilgileriId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Tip")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("YayinId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("YayinBilgisi");
+                    b.HasIndex("PersonelYayinBilgileriId");
+
+                    b.ToTable("YayinAlintiBilgisis");
                 });
 
             modelBuilder.Entity("TaramaMVC.Models.Personel", b =>
@@ -142,15 +154,20 @@ namespace TaramaMVC.Migrations
                 {
                     b.HasOne("TaramaMVC.Models.Personel", "Personel")
                         .WithMany()
-                        .HasForeignKey("PersonelId");
-
-                    b.HasOne("TaramaMVC.Models.YayinBilgisi", "YayinBilgisi")
-                        .WithMany()
-                        .HasForeignKey("YayinBilgisiId");
+                        .HasForeignKey("PersonelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Personel");
+                });
 
-                    b.Navigation("YayinBilgisi");
+            modelBuilder.Entity("TaramaMVC.Models.YayinAlintiBilgisi", b =>
+                {
+                    b.HasOne("TaramaMVC.Models.PersonelYayinBilgileri", "PersonelYayinBilgileri")
+                        .WithMany()
+                        .HasForeignKey("PersonelYayinBilgileriId");
+
+                    b.Navigation("PersonelYayinBilgileri");
                 });
 
             modelBuilder.Entity("TaramaMVC.Models.AnaBilimDali", b =>

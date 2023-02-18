@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace TaramaMVC.Migrations
 {
     /// <inheritdoc />
-    public partial class Mig1 : Migration
+    public partial class v1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,21 +22,6 @@ namespace TaramaMVC.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AnaBilimDals", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "YayinBilgisi",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Baslik = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Alinti = table.Column<int>(type: "int", nullable: false),
-                    Yil = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_YayinBilgisi", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -68,9 +54,12 @@ namespace TaramaMVC.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PersonelId = table.Column<int>(type: "int", nullable: true),
-                    YayinBilgisiId = table.Column<int>(type: "int", nullable: true),
-                    UpdateDate = table.Column<int>(type: "int", nullable: false)
+                    PersonelId = table.Column<int>(type: "int", nullable: false),
+                    Baslik = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BaslikCites = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Alinti = table.Column<int>(type: "int", nullable: false),
+                    Yil = table.Column<int>(type: "int", nullable: false),
+                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -79,11 +68,28 @@ namespace TaramaMVC.Migrations
                         name: "FK_PersonelYayinBilgileris_Personels_PersonelId",
                         column: x => x.PersonelId,
                         principalTable: "Personels",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "YayinAlintiBilgisis",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    YayinId = table.Column<int>(type: "int", nullable: false),
+                    PersonelYayinBilgileriId = table.Column<int>(type: "int", nullable: true),
+                    Tip = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Ad = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_YayinAlintiBilgisis", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PersonelYayinBilgileris_YayinBilgisi_YayinBilgisiId",
-                        column: x => x.YayinBilgisiId,
-                        principalTable: "YayinBilgisi",
+                        name: "FK_YayinAlintiBilgisis_PersonelYayinBilgileris_PersonelYayinBilgileriId",
+                        column: x => x.PersonelYayinBilgileriId,
+                        principalTable: "PersonelYayinBilgileris",
                         principalColumn: "Id");
                 });
 
@@ -98,22 +104,22 @@ namespace TaramaMVC.Migrations
                 column: "PersonelId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PersonelYayinBilgileris_YayinBilgisiId",
-                table: "PersonelYayinBilgileris",
-                column: "YayinBilgisiId");
+                name: "IX_YayinAlintiBilgisis_PersonelYayinBilgileriId",
+                table: "YayinAlintiBilgisis",
+                column: "PersonelYayinBilgileriId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "YayinAlintiBilgisis");
+
+            migrationBuilder.DropTable(
                 name: "PersonelYayinBilgileris");
 
             migrationBuilder.DropTable(
                 name: "Personels");
-
-            migrationBuilder.DropTable(
-                name: "YayinBilgisi");
 
             migrationBuilder.DropTable(
                 name: "AnaBilimDals");

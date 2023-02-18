@@ -1,0 +1,72 @@
+﻿
+@model T
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Product</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Create" method="post">
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        var property = Model[i];
+                        if (property.GetType().GetProperty("Id") != null)
+                        {
+                            var relatedEntities = GetRelatedEntities(property.GetType());
+                            <div class="form-group">
+                                <label asp-for="property.Name" class="control-label"></label>
+                                <select asp-for="property.Name" class="form-control">
+                                    <option value="">Select an option</option>
+                                    @foreach (var relatedEntity in relatedEntities)
+                                    {
+                                        <option value="@relatedEntity.Id">@relatedEntity.Name</option>
+                                    }
+                                </select>
+                                <span asp-validation-for="property.Name" class="text-danger"></span>
+                            </div>
+                        }
+                        else if (property.GetType() == typeof(int))
+                        {
+                            <div class="form-group">
+                                <label asp-for="property.Name" class="control-label"></label>
+                                <input type="number" asp-for="property.Name" class="form-control" />
+                                <span asp-validation-for="property.Name" class="text-danger"></span>
+                            </div>
+                        }
+                        else if (property.GetType() == typeof(string))
+                        {
+                            <div class="form-group">
+                                <label asp-for="property.Name" class="control-label"></label>
+                                <input type="text" asp-for="property.Name" class="form-control" />
+                                <span asp-validation-for="property.Name" class="text-danger"></span>
+                            </div>
+                        }
+                        else if (property.GetType() == typeof(DateTime))
+                        {
+                            <div class="form-group">
+                                <label asp-for="property.Name" class="control-label"></label>
+                                <input type="datetime-local" asp-for="property.Name" class="form-control" />
+                                <span asp-validation-for="property.Name" class="text-danger"></span>
+                            </div>
+                        }
+                        else
+                        {
+                            // Custom logic for other data types
+                        }
+                    }
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

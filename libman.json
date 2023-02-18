@@ -23,6 +23,10 @@
       "files": [
         "jquery.min.js"
       ]
+    },
+    {
+      "library": "datatables@1.10.21",
+      "destination": "wwwroot/js/datatables/"
     }
   ]
 }

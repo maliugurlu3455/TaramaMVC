@@ -13,5 +13,7 @@ namespace TaramaMVC.Models
         public int Yil { get; set; }
         
         public DateTime UpdateDate { get; set; }
+
+
     }
 }

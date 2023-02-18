@@ -90,6 +90,9 @@ namespace TaramaMVC.Migrations
                     b.Property<string>("Baslik")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("BaslikCites")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("PersonelId")
                         .HasColumnType("int");
 
@@ -103,7 +106,29 @@ namespace TaramaMVC.Migrations
 
                     b.HasIndex("PersonelId");
 
-                    b.ToTable("PersonelYayinBilgileris", (string)null);
+                    b.ToTable("PersonelYayinBilgileris");
+                });
+
+            modelBuilder.Entity("TaramaMVC.Models.YayinAlintiBilgisi", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Ad")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Tip")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("YayinId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("YayinAlintiBilgisis");
                 });
 
             modelBuilder.Entity("TaramaMVC.Models.Personel", b =>

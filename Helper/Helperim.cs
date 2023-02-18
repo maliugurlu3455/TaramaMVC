@@ -1,12 +1,36 @@
-﻿using HtmlAgilityPack;
-using NetTopologySuite.Index.HPRtree;
+﻿using Azure.Core;
+using HtmlAgilityPack;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using System.Net;
+using System.Text;
 using TaramaMVC.Models;
 
 namespace TaramaMVC.Helper
 {
     public static class Helperim
     {
-       
+        private static CookieCollection _ccn =null;
+        private static CookieContainer _cocon = null;
+        public static CookieContainer Cocon()
+        {
+            return _cocon;
+        }
+        public static CookieContainer SetCocon(CookieCollection cc)
+        {
+            _cocon = new CookieContainer();
+            _cocon.Add(cc);
+            return _cocon;
+        }
+        public static CookieCollection ccn()
+        {
+            return _ccn;    
+        }
+        public static CookieCollection Setccn(CookieCollection cc)
+        {
+            _ccn=cc;
+            return _ccn;
+        }
         public static string[] GetUserId(string AdSoyad,bool hepsi)
         {
             HtmlDocument doc = null;
@@ -37,7 +61,7 @@ namespace TaramaMVC.Helper
         }
         public static List<PersonelYayinBilgileri> KullaniciBilgileri(string users)
         {
-            System.Threading.Thread.Sleep(Random.Shared.Next(100, 1100));
+            System.Threading.Thread.Sleep(Random.Shared.Next(2000, 3100));
             HtmlDocument doc = null;
             List<PersonelYayinBilgileri> Liste = new List<PersonelYayinBilgileri>();
             PersonelYayinBilgileri pers = null;
@@ -50,8 +74,12 @@ namespace TaramaMVC.Helper
             try
             {
                 HtmlWeb web = new HtmlWeb();
-                var url = new Uri("https://scholar.google.com/citations?hl=tr&pagesize=1000&user=" + users.Trim() + "");
-                doc = web.Load(url);
+                web.UseCookies= true;
+                web.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.1587.41 Safari/537.36 Edg/110.0.864.52";
+                string url = "https://scholar.google.com/citations?hl=tr&pagesize=1000&user=" + users.Trim() + "";
+                
+                doc = GetPage(url);
+                //var responseCookies = web.ResponseCookies;
                 //alıntı sayısı
 
                 //var ScholarName = doc.DocumentNode.SelectNodes("//div[@class='gs_scl']");
@@ -164,36 +192,48 @@ namespace TaramaMVC.Helper
             }
             return Liste;
         }
-
-        public static string AlintiGetir(string url)
+       
+        public static List<string> AlintiGetirSelenium(
+            //string url
+            )
         {
-            //string url = "https://scholar.google.com/scholar?oi=bibs&hl=tr&cites=4986682506114850678";
             
+            //1f9146a88abddffbb064fbc4e60a22b0f85f0e59068b5e4275b4e454c598c333 
+            List<string> liste = null;
+            string url = "https://scholar.google.com/scholar?oi=bibs&hl=tr&cites=4986682506114850678";
+               //"https://serpapi.com/search.json?engine=google_scholar_cite&q=FDc6HiktlqEJ";
+           //IWebDriver driver = new ChromeDriver().Navigate().GoToUrl(url);
+            System.Threading.Thread.Sleep(Random.Shared.Next(2000, 6100));
             HtmlWeb web = new HtmlWeb();
             HtmlDocument doc = null;
             HtmlDocument doc2 = null;
-            string alintiadi = "";
-            doc = web.Load(url);
+       
+            doc = GetPage(url);
             var nods = doc.DocumentNode.SelectNodes("//div[@class = 'gs_r gs_or gs_scl']");
             if (nods != null && nods.Count > 0)
             {
+                liste = new List<string>();
                 for (int i = 0; i < nods.Count; i++)
-            {
+                {
+                    //System.Threading.Thread.Sleep(Random.Shared.Next(2000, 3100));
                     var baslikUrl = nods[i].SelectNodes("//div[@class='gs_r gs_or gs_scl']")[i].GetAttributeValue("data-cid", "");
                    
                     if (baslikUrl.Length>4)
                     {
+                        //https://scholar.google.com/scholar?q=info:PEAcbrARXmMJ:scholar.google.com/&output=cite&scirp=0&hl=tr
+                        //https://serpapi.com/search.json?engine=google_scholar_cite&q=FDc6HiktlqEJ
                         string url2 = "https://scholar.google.com/scholar?q=info:"+ baslikUrl + ":scholar.google.com/&output=cite&scirp=0&hl=tr";
                         web = new HtmlWeb();
-
-                        doc2=web.Load(url2,"GET");
+                  
+                        System.Threading.Thread.Sleep(Random.Shared.Next(2000, 6100));
+                        doc2 = GetPage(url2);
                         var list1 = doc2.DocumentNode.SelectNodes("//div[@class = 'gs_citr']");
                         
                         if (list1!=null && list1.Count>0)
                         {
                             //for (int j = 0; i < list1.Count; j++)
                             //{
-                                 alintiadi = list1[1].InnerHtml;
+                            liste.Add(list1[1].InnerHtml);
                             //}
                             
                         }
@@ -201,91 +241,130 @@ namespace TaramaMVC.Helper
                     
                 }
             }
-            return alintiadi;   
+            return liste;   
+        }
+
+        public static List<string> AlintiGetir(string url)
+        {
+            //1f9146a88abddffbb064fbc4e60a22b0f85f0e59068b5e4275b4e454c598c333 
+            List<string> liste = null;
+            //string url = "https://scholar.google.com/scholar?oi=bibs&hl=tr&cites=4986682506114850678";
+            //https://serpapi.com/search.json?engine=google_scholar_cite&q=FDc6HiktlqEJ
+            System.Threading.Thread.Sleep(Random.Shared.Next(2000, 6100));
+            HtmlWeb web = new HtmlWeb();
+            HtmlDocument doc = null;
+            HtmlDocument doc2 = null;
+
+            //doc = GetPage(url);
+            doc = web.Load(url,"get");
+            var nods = doc.DocumentNode.SelectNodes("//div[@class = 'gs_r gs_or gs_scl']");
+            if (nods != null && nods.Count > 0)
+            {
+                liste = new List<string>();
+                for (int i = 0; i < nods.Count; i++)
+                {
+                    //System.Threading.Thread.Sleep(Random.Shared.Next(2000, 3100));
+                    var baslikUrl = nods[i].SelectNodes("//div[@class='gs_r gs_or gs_scl']")[i].GetAttributeValue("data-cid", "");
+
+                    if (baslikUrl.Length > 4)
+                    {
+                        //https://scholar.google.com/scholar?q=info:PEAcbrARXmMJ:scholar.google.com/&output=cite&scirp=0&hl=tr
+                        //https://serpapi.com/search.json?engine=google_scholar_cite&q=FDc6HiktlqEJ
+                        string url2 = "https://scholar.google.com/scholar?q=info:" + baslikUrl + ":scholar.google.com/&output=cite&scirp=0&hl=tr";
+                        web = new HtmlWeb();
+
+                        System.Threading.Thread.Sleep(Random.Shared.Next(2000, 6100));
+                        //doc2 = GetPage(url2);
+                        doc2 = web.Load(url2);
+                        var list1 = doc2.DocumentNode.SelectNodes("//div[@class = 'gs_citr']");
+
+                        if (list1 != null && list1.Count > 0)
+                        {
+                            //for (int j = 0; i < list1.Count; j++)
+                            //{
+                            liste.Add(list1[1].InnerHtml);
+                            //}
+
+                        }
+                    }
+
+                }
+            }
+            return liste;
+        }
+
+        public static HtmlDocument GetPage(string url)
+        {
+            Uri _url=new Uri(url);
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_url);
+            request.Method = "GET";
+            request.ContentType = "text/html; charset=UTF-8";
+            if (Cocon == null)
+            {
+                request.CookieContainer = new CookieContainer();
+            }
+            else
+            {
+                request.CookieContainer = Cocon();
+            }
+            //request.Referer= "";
+
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            var stream = response.GetResponseStream();
+            Setccn(response.Cookies);
+            
+            //When you get the response from the website, the cookies will be stored
+            //automatically in "_cookies".
+
+            using (var reader = new StreamReader(stream, Encoding.GetEncoding("iso-8859-9")))
+            {
+                string html = reader.ReadToEnd();
+                var doc = new HtmlDocument();
+               
+               doc.LoadHtml(html);
+               
+                return doc;
+            }
         }
     }
+
+  
+
 }
-#region eskiler
-//if (nods[i].SelectNodes("//a[@class='gsc_a_ac gs_ibl']")[i]!=null && nods[i].SelectNodes("//a[@class='gsc_a_ac gs_ibl']").Count > 0)
-//{
-//    try
-//    {
-//        baslikcites = nods[i].SelectNodes("//a[@class='gsc_a_ac gs_ibl']")[i].InnerText;
+  //public class MyWebClient
+    //{
+    //    //The cookies will be here.
+    //    private CookieContainer _cookies = new CookieContainer();
 
-//        //var nodesWithARef = nods[i].SelectNodes("//a[@class='gsc_a_ac gs_ibl']")[i].GetAttributeValue("href", "");
-//        //if (nodesWithARef!="" && nodesWithARef.Length>80)
-//        //{
-//        //    int aranan = nodesWithARef.IndexOf("cites=", 0);
-//        //    baslikcites = nodesWithARef.Substring(aranan + 6, nodesWithARef.Length - (aranan + 6));
+    //    //In case you need to clear the cookies
+    //    public void ClearCookies()
+    //    {
+    //        _cookies = new CookieContainer();
+    //    }
 
-//        //}
-//        //else
-//        //{
-//        //    baslikcites = "";
-//        //}
+    //    public HtmlDocument GetPage(string url)
+    //    {
+    //        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+    //        request.Method = "GET";
 
-//    }
-//    catch (Exception e)
-//    {
-//        baslikcites = e.Message;
-//    }
+    //        //Set more parameters here...
+    //        //...
 
-//}
-//else
-//{
-//    baslikcites = "";
-//}
-//public static string  GetUserId(string Ad, string Soyad)
-//{
-//    HtmlDocument doc = null;
-//    string UserID = null;
-//    try
-//    {
-//        HtmlWeb web = new HtmlWeb();
-//        var url = new Uri("https://scholar.google.com/citations?hl=tr&view_op=search_authors&mauthors="+ Ad + "+"+ Soyad + "&btnG=");
-//        doc = web.Load(url);
-//        var nod = doc.DocumentNode.SelectSingleNode("//h3[@class = 'gs_ai_name']");
-//        if (nod != null)
-//        {
-//        var nodesWithARef = nod.Descendants("a").FirstOrDefault().GetAttributeValue("href", "");
-//        int aranan = nodesWithARef.IndexOf("user=", 0);
-//        UserID = nodesWithARef.Substring(aranan + 5, nodesWithARef.Length - (aranan + 5));   
+    //        //This is the important part.
+    //        request.CookieContainer = _cookies;
 
-//        }
+    //        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+    //        var stream = response.GetResponseStream();
 
-//    }
-//    catch
-//    {
-//        UserID = null;
-//    }
-//    return UserID;
-//}
-//public static string GetUserId(string AdSoyad)
-//{
-//    HtmlDocument doc = null;
-//    string UserID = string.Empty;
-//    try
-//    {
-//        HtmlWeb web = new HtmlWeb();
-//        var url = new Uri("https://scholar.google.com/citations?hl=tr&view_op=search_authors&mauthors=" + AdSoyad + "&btnG=");
-//        doc = web.Load(url);
-//        var nod = doc.DocumentNode.SelectSingleNode("//h3[@class = 'gs_ai_name']");
-//        if (nod != null)
-//        {
-//            var nodesWithARef = nod.Descendants("a").FirstOrDefault().GetAttributeValue("href", "");
-//            int aranan = nodesWithARef.IndexOf("user=", 0);
-//            UserID = nodesWithARef.Substring(aranan + 5, nodesWithARef.Length - (aranan + 5));
+    //        //When you get the response from the website, the cookies will be stored
+    //        //automatically in "_cookies".
 
-//           // string value = nod.SelectSingleNode("//span[@class='gs_hlt']").InnerText;
-
-//        }
-
-//    }
-//    catch
-//    {
-//        UserID = string.Empty; ;
-//    }
-//    return UserID;
-//}
-
-#endregion
+    //        using (var reader = new StreamReader(stream))
+    //        {
+    //            string html = reader.ReadToEnd();
+    //            var doc = new HtmlDocument();
+    //            doc.LoadHtml(html);
+    //            return doc;
+    //        }
+    //    }
+    //}

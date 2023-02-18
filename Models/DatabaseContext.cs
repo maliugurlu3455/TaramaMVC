@@ -13,13 +13,14 @@ namespace TaramaMVC.Models
         {
            
         }
+        public DbSet<YayinAlintiBilgisi> YayinAlintiBilgisis { get; set; } = default!;
         public DbSet<PersonelYayinBilgileri> PersonelYayinBilgileris { get; set; } = default!;
         public DbSet<Personel> Personels { get; set; } = default!;
         public DbSet<AnaBilimDali> AnaBilimDals { get; set; } = default!;
-        
+       
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<PersonelYayinBilgileri>().ToTable("PersonelYayinBilgileris");
+           // modelBuilder.Entity<PersonelYayinBilgileri>().ToTable("PersonelYayinBilgileris");
 
             modelBuilder.Entity<AnaBilimDali>()
      .HasMany(c => c.Personeller)
@@ -27,9 +28,10 @@ namespace TaramaMVC.Models
 
             modelBuilder.Entity<Personel>()
         .HasOne(e => e.AnaBilimDallari)
-        .WithMany(c => c.Personeller);
+        .WithMany(c => c.Personeller)
+.HasForeignKey(p => p.AnaBilimDallariId);
 
-           
+
 
         }
 

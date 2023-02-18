@@ -22,6 +22,8 @@ namespace TaramaMVC.Controllers
         {
             return View();
         }
+
+    
         public IActionResult Raporlar()
         {
             return View();

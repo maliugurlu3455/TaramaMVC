@@ -1,0 +1,65 @@
+﻿@model IEnumerable<TaramaMVC.Models.YayinAlintiBilgisi>
+
+@{
+    ViewData["Title"] = "Index";
+    int RowNo = 0;
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table id="tblliste" class="table table-sm table-bordered table-hover table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.Label("SıraNo")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.YayinId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tip)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ad)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+                <td>
+                    @{
+                        RowNo++;
+                    } @RowNo
+                </td>
+             
+            <td>
+                @Html.DisplayFor(modelItem => item.YayinId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tip)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ad)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<script>
+    $(document).ready(function () {
+        $('#tblliste').dataTable({
+            "sDom": '<"row view-filter"<"col-sm-12"<"pull-left"l><"pull-right"f><"clearfix">>>t<"row view-pager"<"col-sm-12"<"text-center"ip>>>'
+        });
+    });
+
+</script>

@@ -12,7 +12,7 @@
 </p>*@
 <div class="container-sm">
     <div class="table-responsive-sm">
-        <table class="table table-sm table-bordered table-hover table-striped align-middle ">
+        <table id="tblliste" class="table table-sm table-bordered table-hover table-striped">
             <thead class="table-light align-middle">
         <tr>
                     <th>
@@ -48,7 +48,8 @@
                                 RowNo++;
                             } @RowNo
                         </td>
-            <td>
+                        <td>
+                   
                 @Html.DisplayFor(modelItem => item.Baslik)
             </td>
             <td>
@@ -63,6 +64,7 @@
             </td>
                 <td >
                             <select asp-for=@item.PersonelId class="form-control" asp-items="ViewBag.PersonelId" placeholder="ScholarName" readonly></select>
+
                 </td>
             <td>
                 @Html.DisplayFor(modelItem => item.UpdateDate)
@@ -86,3 +88,15 @@
 </table>
 </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $('#tblliste').dataTable();
+    });
+
+</script>
+@section Scripts
+{
+   @* <script src="~/js/datatables/js/jquery.dataTables.min.js"></script>*@
+   
+}
