@@ -1,7 +1,4 @@
-﻿using Azure.Core;
-using HtmlAgilityPack;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
+﻿using HtmlAgilityPack;
 using System.Net;
 using System.Text;
 using TaramaMVC.Models;

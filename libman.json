@@ -2,31 +2,44 @@
   "version": "1.0",
   "defaultProvider": "cdnjs",
   "libraries": [
+
     {
-      "library": "pivottable@2.23.0",
-      "destination": "wwwroot/pivot",
-      "files": [
-        "pivot.min.js",
-        "pivot.min.css"
-      ]
-    },
-    {
-      "library": "jqueryui@1.13.2",
-      "destination": "wwwroot/lib/jqueryui/",
-      "files": [
-        "jquery-ui.min.js"
-      ]
-    },
-    {
+      "provider": "cdnjs",
       "library": "jquery@3.6.3",
-      "destination": "wwwroot/jquery/",
-      "files": [
-        "jquery.min.js"
-      ]
+      "destination": "wwwroot/js/jquery/"
     },
     {
-      "library": "datatables@1.10.21",
-      "destination": "wwwroot/js/datatables/"
+      "provider": "cdnjs",
+      "library": "bootstrap@5.2.3",
+      "destination": "wwwroot/js/bootstrap/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "datatables.net-bs5@1.13.2",
+      "destination": "wwwroot/js/datatables.net-bs5/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "pivottable@2.23.0",
+      "destination": "wwwroot/js/pivottable/"
     }
-  ]
+  ,
+{
+  "provider": "cdnjs",
+  "library": "popper.js@2.11.6",
+  "destination": "wwwroot/js/popper.js/"
+}
+,
+{
+  "provider": "cdnjs",
+  "library": "jqueryui@1.13.2",
+  "destination": "wwwroot/js/jqueryui/"
+}
+,
+{
+  "provider": "cdnjs",
+  "library": "datatables.net-jqui@2.1.1",
+  "destination": "wwwroot/js/jquery/datatables.net-jqui/"
+}
+]
 }

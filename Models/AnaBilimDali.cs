@@ -8,6 +8,7 @@ namespace TaramaMVC.Models
         public int Id { get; set; }
 
         [StringLength(150)]
+        [Required]
         public string Name { get; set; }
 
         public ICollection<Personel> Personeller { get; set; }  

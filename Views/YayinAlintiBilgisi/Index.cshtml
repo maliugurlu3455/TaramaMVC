@@ -4,13 +4,13 @@
     ViewData["Title"] = "Index";
     int RowNo = 0;
 }
-
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table id="tblliste" class="table table-sm table-bordered table-hover table-striped">
+<div class="Container">
+<div class="Row">
+    <a asp-action="Create" class="btn btn-secondary">Create a User</a>
+</div>
+<div class="Row">
+<div class="table-responsive">   
+<table id="tblliste" class="table table-bordered table-hover table-striped">
     <thead>
         <tr>
             <th>
@@ -55,11 +55,12 @@
 }
     </tbody>
 </table>
+</div>
+</div>
+</div>
 <script>
     $(document).ready(function () {
-        $('#tblliste').dataTable({
-            "sDom": '<"row view-filter"<"col-sm-12"<"pull-left"l><"pull-right"f><"clearfix">>>t<"row view-pager"<"col-sm-12"<"text-center"ip>>>'
-        });
+        $('#tblliste').DataTable();
     });
 
 </script>

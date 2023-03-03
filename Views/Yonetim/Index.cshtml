@@ -1,0 +1,49 @@
+﻿@model IEnumerable<AppUser>
+@{
+    ViewData["Title"] = "Kullanıcı Listesi";
+    int RowNo = 0;
+}
+
+<h1 class="bg-info text-white">Kullanıcı Listesi</h1>
+
+<table class="table table-sm table-bordered" id="tblliste">
+    <thead>
+    <tr>
+        <th>
+            @Html.Label("SıraNo")
+        </th>
+        <th>ID</th>
+        <th>Kullanıcı Adı</th>
+        <th>E-mail</th>
+        <th></th>
+           
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (AppUser user in Model)
+    {
+        <tr>
+            <td>
+                @{
+                    RowNo++;
+                } @RowNo
+            </td>
+            <td>@user.Id</td>
+            <td>@user.UserName</td>
+            <td>@user.Email</td>
+            <td>
+                    <a asp-action="Edit" asp-route-id="@user.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@user.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@user.Id">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<script>
+    $(document).ready(function () {
+        $('#tblliste').DataTable();
+    });
+
+</script>

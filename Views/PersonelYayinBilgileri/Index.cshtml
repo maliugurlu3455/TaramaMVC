@@ -10,9 +10,9 @@
 @*<p>
     <a asp-action="Create">Create New</a>class="align-middle"
 </p>*@
-<div class="container-sm">
-    <div class="table-responsive-sm">
-        <table id="tblliste" class="table table-sm table-bordered table-hover table-striped">
+<div class="container">
+    <div class="table-responsive">
+        <table id="tblliste" class="table table-bordered table-hover table-striped">
             <thead class="table-light align-middle">
         <tr>
                     <th>
@@ -63,7 +63,8 @@
                 @Html.DisplayFor(modelItem => item.Yil)
             </td>
                 <td >
-                            <select asp-for=@item.PersonelId class="form-control" asp-items="ViewBag.PersonelId" placeholder="ScholarName" readonly></select>
+                             
+                            <input asp-for=@item.PersonelId class="form-control" asp-items="ViewBag.PersonelId" placeholder="ScholarName" readonly/>
 
                 </td>
             <td>
@@ -91,7 +92,7 @@
 
 <script>
     $(document).ready(function () {
-        $('#tblliste').dataTable();
+        $('#tblliste').DataTable();
     });
 
 </script>

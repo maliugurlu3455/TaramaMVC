@@ -2,12 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using System.Diagnostics.Metrics;
-using System.Net;
-using System.Reflection;
-using System.Security.Policy;
 using System.Text;
 using TaramaMVC.Helper;
 using TaramaMVC.Models;
@@ -26,7 +20,7 @@ namespace TaramaMVC.Controllers
         // GET: Personeller
         public async Task<IActionResult> Index()
         {
-            var databaseContext = _context.Personels.Include(p => p.AnaBilimDallari);
+            var databaseContext = _context.Personels.OrderByDescending(t=>t.Alintilanma).Include(p => p.AnaBilimDallari);
             
             return View(await databaseContext.ToListAsync());
         }
@@ -312,7 +306,7 @@ namespace TaramaMVC.Controllers
                     }
                     else
                     {
-                       // return Content(doc.Text, System.Net.Mime.MediaTypeNames.Text.Html, Encoding.GetEncoding("iso-8859-9"));
+                     // return Content(doc.Text, System.Net.Mime.MediaTypeNames.Text.Html, Encoding.GetEncoding("iso-8859-9"));
                     }
 
                 }
@@ -320,9 +314,10 @@ namespace TaramaMVC.Controllers
             }
             return RedirectToAction("Index");
         }
-        public IWebDriver driver= null;
+        //public IWebDriver driver= null;
         public IActionResult Test()
         {
+            /*
             var options = new ChromeOptions();
             options.AddArgument("--no-sandbox");
             options.AddArgument("headless");
@@ -350,6 +345,7 @@ namespace TaramaMVC.Controllers
             {
                 item.Click();
             }
+            */
             //var liste = Helperim.AlintiGetirSelenium();
             return RedirectToAction("Index");
 
