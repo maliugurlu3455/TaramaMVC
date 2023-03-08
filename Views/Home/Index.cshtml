@@ -1,12 +1,19 @@
 ﻿
 @{
-    ViewData["Title"] = "Özet Veriler";
+    ViewData["Title"] = "Makale ve Alıntı Verileri";
 }
 
 @*
 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Getir">Getir</a>*@
-<div class="container-sm mt-2">
+<div class="container">
+    <div class="row mt-2">
+    <div class="bg-light">
+            <h4 class="alert alert-secondary">  @ViewData["Title"]</h4>
+        </div>
+    </div>
+    <div class="row mt-2">
     <canvas id="teacherChart"></canvas>
+    </div>
 </div>
 
 <script>
@@ -39,7 +46,7 @@
                     borderWidth: 1
                 },
                 {
-                    label: 'Adı Geçen Makale Sayısı',
+                    label: 'Makale Sayısı',
                     data: citationCount,
                     backgroundColor: 'rgba(54, 162, 235, 0.2)',
                     borderColor: 'rgba(54, 162, 235, 1)',

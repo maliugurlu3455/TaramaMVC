@@ -26,8 +26,10 @@ namespace TaramaMVC.Controllers
         // GET: PersonelYayinBilgileri
         public async Task<IActionResult> Index()
         {
+
             ViewData["PersonelId"] = new SelectList(_context.Personels, "Id", "ScholarName");
-            return View(await _context.PersonelYayinBilgileris.ToListAsync());
+            var liste = await _context.PersonelYayinBilgileris.Include(p => p.Personel).ToListAsync();
+            return View(liste);
         }
 
         // GET: PersonelYayinBilgileri/Details/5

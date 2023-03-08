@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -18,13 +19,14 @@ namespace TaramaMVC.Controllers
             _context = context;
         }
 
-        // GET: YayinAlintiBilgisi
+        // GET: YayinAlintiBilgisi ialtin@ogu.edu.tr 
         public async Task<IActionResult> Index()
         {
-              return View(await _context.YayinAlintiBilgisis.ToListAsync());
+            
+            return View(await _context.YayinAlintiBilgisis.Include(t => t.personelYayinBilgileri).Include(t=>t.personelYayinBilgileri.Personel).ToListAsync());
         }
 
-        // GET: YayinAlintiBilgisi/Details/5
+        // GET: YayinAlintiBilgisi/Details/5 ialtin@ogu.edu.tr
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.YayinAlintiBilgisis == null)
@@ -43,6 +45,7 @@ namespace TaramaMVC.Controllers
         }
 
         // GET: YayinAlintiBilgisi/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -53,6 +56,7 @@ namespace TaramaMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Create([Bind("Id,YayinId,Tip,Ad")] YayinAlintiBilgisi yayinAlintiBilgisi)
         {
             if (ModelState.IsValid)
@@ -65,6 +69,7 @@ namespace TaramaMVC.Controllers
         }
 
         // GET: YayinAlintiBilgisi/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.YayinAlintiBilgisis == null)
@@ -85,6 +90,7 @@ namespace TaramaMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(int id, [Bind("Id,YayinId,Tip,Ad")] YayinAlintiBilgisi yayinAlintiBilgisi)
         {
             if (id != yayinAlintiBilgisi.Id)
@@ -116,6 +122,7 @@ namespace TaramaMVC.Controllers
         }
 
         // GET: YayinAlintiBilgisi/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.YayinAlintiBilgisis == null)
@@ -136,6 +143,7 @@ namespace TaramaMVC.Controllers
         // POST: YayinAlintiBilgisi/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.YayinAlintiBilgisis == null)

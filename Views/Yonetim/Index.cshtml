@@ -3,16 +3,21 @@
     ViewData["Title"] = "Kullanıcı Listesi";
     int RowNo = 0;
 }
-
+<div class="container-sm md-2 mt-2">
 <h1 class="bg-info text-white">Kullanıcı Listesi</h1>
-
+@*<a asp-action="Create" class="btn btn-secondary">Create a User</a>*@
+    <div class="Row">
+        <a asp-action="Create" class="btn btn-primary">Create a User</a>
+    </div>
+    <div class="Row">
+<div class="table-responsive">
 <table class="table table-sm table-bordered" id="tblliste">
     <thead>
     <tr>
         <th>
             @Html.Label("SıraNo")
         </th>
-        <th>ID</th>
+      
         <th>Kullanıcı Adı</th>
         <th>E-mail</th>
         <th></th>
@@ -28,18 +33,33 @@
                     RowNo++;
                 } @RowNo
             </td>
-            <td>@user.Id</td>
+          
             <td>@user.UserName</td>
             <td>@user.Email</td>
             <td>
-                    <a asp-action="Edit" asp-route-id="@user.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@user.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@user.Id">Delete</a>
+                                <div class="btn-group btn-group-justified">
+                                    <a asp-action="Details" asp-route-id="@user.Id" class="btn-sm btn-block">
+                                        <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#view1" /></svg>İncele
+                                    </a>
+                                    @if (User?.Identity?.IsAuthenticated ?? false)
+                                    {
+                                        <a asp-action="Edit" asp-route-id="@user.Id" class="btn-sm btn btn-block">
+                                            <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#edit1" /></svg>Düzenle
+                                        </a>
+                                        <a asp-action="Delete" asp-route-id="@user.Id" class="btn-sm btn-block">
+                                            <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#delete1" /></svg>Sil
+                                        </a>
+                                    }
+
+                                </div>
             </td>
         </tr>
     }
     </tbody>
 </table>
+</div>
+    </div>
+</div>
 
 <script>
     $(document).ready(function () {

@@ -21,7 +21,14 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddRazorPages();
 
-builder.Services.ConfigureApplicationCookie(opts => opts.LoginPath = "/Authenticate/Login");
+//builder.Services.ConfigureApplicationCookie(opts => opts.LoginPath = "/Authenticate/Login");
+
+//builder.Services.ConfigureApplicationCookie(options =>
+//{
+//    options.Cookie.Name = ".AspNetCore.Identity.Application";
+//    options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+//    options.SlidingExpiration = true;
+//});
 
 //builder.Services.AddSession();
 var app = builder.Build();

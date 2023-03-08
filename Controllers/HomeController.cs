@@ -1,34 +1,38 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NuGet.DependencyResolver;
 using System.Diagnostics;
 using TaramaMVC.Models;
 namespace TaramaMVC.Controllers
 {
+   
     public class HomeController : Controller
     {
+        private UserManager<AppUser> userManager;
+      
         private readonly ILogger<HomeController> _logger;
 
         private readonly DatabaseContext _context;
 
-    
-        public HomeController(ILogger<HomeController> logger, DatabaseContext context)
+     
+        public HomeController(ILogger<HomeController> logger, DatabaseContext context, UserManager<AppUser> userMgr)
         {
             _logger = logger;
             _context = context;
+            userManager = userMgr;
         }
-
-        public IActionResult Index()
+        public  IActionResult Index()
         {
             return View();
         }
-
-    
         public IActionResult Raporlar()
         {
             return View();
         }
         //[ResponseCache(Duration = 20, Location = ResponseCacheLocation.None, NoStore = true)] 
+        [HttpGet]
         public async Task<JsonResult>  HepsiniGetir()
         {
             var users = await( from k in  _context.PersonelYayinBilgileris join 
@@ -38,6 +42,7 @@ namespace TaramaMVC.Controllers
             
             return Json(users);
         }
+        [HttpGet]
         public async Task<JsonResult> ChartHepsiniGetir()
         {
             var academicData = await (from k in _context.PersonelYayinBilgileris
@@ -67,5 +72,6 @@ namespace TaramaMVC.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+      
     }
 }

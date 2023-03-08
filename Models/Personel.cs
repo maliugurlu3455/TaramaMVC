@@ -20,7 +20,7 @@ namespace TaramaMVC.Models
         public  AnaBilimDali AnaBilimDallari { get; set; }
 
         [StringLength(50)]
-        [Required]
+        //[Required]
         public string User { get; set; }
         public int Alintilanma { get; set; }
         [StringLength(150)]

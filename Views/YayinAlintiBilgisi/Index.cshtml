@@ -5,9 +5,7 @@
     int RowNo = 0;
 }
 <div class="Container">
-<div class="Row">
-    <a asp-action="Create" class="btn btn-secondary">Create a User</a>
-</div>
+
 <div class="Row">
 <div class="table-responsive">   
 <table id="tblliste" class="table table-bordered table-hover table-striped">
@@ -16,9 +14,16 @@
             <th>
                 @Html.Label("SıraNo")
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.YayinId)
+                        <th>
+                            @Html.Label("YayınID")
+                           @* @Html.DisplayNameFor(model => model.personelYayinBilgileriId)*@
             </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.personelYayinBilgileri.Personel.ScholarName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.personelYayinBilgileri.Baslik)
+                        </th>
             <th>
                 @Html.DisplayNameFor(model => model.Tip)
             </th>
@@ -38,8 +43,14 @@
                 </td>
              
             <td>
-                @Html.DisplayFor(modelItem => item.YayinId)
+                @Html.DisplayFor(modelItem => item.personelYayinBilgileriId)
             </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.personelYayinBilgileri.Personel.ScholarName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.personelYayinBilgileri.Baslik)
+                            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Tip)
             </td>
@@ -47,9 +58,20 @@
                 @Html.DisplayFor(modelItem => item.Ad)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                <div class="btn-group btn-group-justified">
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn-sm btn-block">
+                                    <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#view1" /></svg>İncele
+                                </a>
+                                @if (User?.Identity?.IsAuthenticated ?? false)
+                                {
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn-sm btn btn-block">
+                                        <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#edit1" /></svg>Düzenle
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn-sm btn-block">
+                                        <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#delete1" /></svg>Sil
+                                    </a>
+                                }
+                                </div>
             </td>
         </tr>
 }
@@ -60,7 +82,14 @@
 </div>
 <script>
     $(document).ready(function () {
-        $('#tblliste').DataTable();
+        $('#tblliste').DataTable(
+        //    {
+        //    dom: 'Bfrtip',
+        //    buttons: [
+        //        'copy', 'csv', 'excel', 'pdf', 'print'
+        //    ]
+        //}
+        );
     });
 
 </script>

@@ -11,10 +11,11 @@ namespace TaramaMVC.Controllers
     public class PersonellerController : Controller
     {
         private readonly DatabaseContext _context;
-
-        public PersonellerController(DatabaseContext context)
+        private readonly IConfiguration _configuration;
+        public PersonellerController(DatabaseContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
 
         // GET: Personeller
@@ -123,7 +124,7 @@ namespace TaramaMVC.Controllers
             return View(personel);
         }
 
-       
+       //alıntı güncelle
         public async Task<IActionResult> AGuncelle(int? id) {
             YayinAlintiBilgisi yAB = null;
             var Pyb = await _context.PersonelYayinBilgileris.Where(r => r.Alinti > 0 && r.PersonelId==id).ToListAsync();
@@ -131,7 +132,7 @@ namespace TaramaMVC.Controllers
             {
                 foreach (var pyb in Pyb)
                 {
-
+                    //Alinti Getir
                     var liste = Helperim.AlintiGetir(pyb.BaslikCites);
                     if (liste != null && liste.Count > 0)
                     {
@@ -139,7 +140,7 @@ namespace TaramaMVC.Controllers
                         {
                             yAB = null;
                             yAB = new YayinAlintiBilgisi();
-                            yAB.YayinId = pyb.Id;
+                            yAB.personelYayinBilgileriId = pyb.Id;
                             yAB.Ad = item;
                             await _context.YayinAlintiBilgisis.AddAsync(yAB);
                         }
@@ -298,7 +299,7 @@ namespace TaramaMVC.Controllers
                         {
                             yAB = null;
                             yAB = new YayinAlintiBilgisi();
-                            yAB.YayinId = pyb.Id;
+                            yAB.personelYayinBilgileriId = pyb.Id;
                             yAB.Ad = item;
                             await _context.YayinAlintiBilgisis.AddAsync(yAB);
                         }

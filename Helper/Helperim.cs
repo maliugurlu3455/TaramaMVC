@@ -7,6 +7,7 @@ namespace TaramaMVC.Helper
 {
     public static class Helperim
     {
+        private static readonly IConfiguration configuration;
         private static CookieCollection _ccn =null;
         private static CookieContainer _cocon = null;
         public static CookieContainer Cocon()
@@ -243,7 +244,8 @@ namespace TaramaMVC.Helper
 
         public static List<string> AlintiGetir(string url)
         {
-            //1f9146a88abddffbb064fbc4e60a22b0f85f0e59068b5e4275b4e454c598c333 
+            string _url = url + "&scipsc=&as_ylo="+configuration.GetValue<string>("ylo") +"&as_yhi="+ configuration.GetValue<string>("yhi");
+            //1f9146a88abddffbb064fbc4e60a22b0f85f0e59068b5e4275b4e454c598c333 https://scholar.google.com/scholar?as_ylo=2022&hl=tr&as_sdt=2005&sciodt=0,5&cites=4986682506114850678&scipsc=
             List<string> liste = null;
             //string url = "https://scholar.google.com/scholar?oi=bibs&hl=tr&cites=4986682506114850678";
             //https://serpapi.com/search.json?engine=google_scholar_cite&q=FDc6HiktlqEJ
@@ -253,7 +255,7 @@ namespace TaramaMVC.Helper
             HtmlDocument doc2 = null;
 
             //doc = GetPage(url);
-            doc = web.Load(url,"get");
+            doc = web.Load(_url, "get");
             var nods = doc.DocumentNode.SelectNodes("//div[@class = 'gs_r gs_or gs_scl']");
             if (nods != null && nods.Count > 0)
             {
@@ -268,6 +270,7 @@ namespace TaramaMVC.Helper
                         //https://scholar.google.com/scholar?q=info:PEAcbrARXmMJ:scholar.google.com/&output=cite&scirp=0&hl=tr
                         //https://serpapi.com/search.json?engine=google_scholar_cite&q=FDc6HiktlqEJ
                         string url2 = "https://scholar.google.com/scholar?q=info:" + baslikUrl + ":scholar.google.com/&output=cite&scirp=0&hl=tr";
+                                       
                         web = new HtmlWeb();
 
                         System.Threading.Thread.Sleep(Random.Shared.Next(2000, 6100));

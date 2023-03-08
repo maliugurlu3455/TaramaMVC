@@ -59,6 +59,10 @@
 
   <ItemGroup>
     <None Include="Properties\serviceDependencies.local.json.user" />
+    <None Include="Views\Yonetim\Create.cshtml" />
+    <None Include="Views\Yonetim\Delete.cshtml" />
+    <None Include="Views\Yonetim\Edit.cshtml" />
+    <None Include="Views\Yonetim\Index.cshtml" />
   </ItemGroup>
 
 </Project>

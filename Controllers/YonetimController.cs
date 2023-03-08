@@ -4,10 +4,12 @@ using TaramaMVC.Models;
 
 namespace TaramaMVC.Controllers
 {
+
     public class YonetimController : Controller
     {
         private UserManager<AppUser> userManager;
         private IPasswordHasher<AppUser> passwordHasher;
+
         public YonetimController(UserManager<AppUser> usrMgr, IPasswordHasher<AppUser> passwordHash)
         {
             userManager = usrMgr;
@@ -21,14 +23,14 @@ namespace TaramaMVC.Controllers
         public ViewResult Create() => View();
 
         [HttpPost]
-        public async Task<IActionResult> Create(LoginModel user)
+        public async Task<IActionResult> Create(User user)
         {
             if (ModelState.IsValid)
             {
                 AppUser appUser = new AppUser
                 {
-                    UserName = user.UserName,
-                    Email = user.EmailAddress
+                    UserName = user.Name,
+                    Email = user.Email
                 };
 
                 IdentityResult result = await userManager.CreateAsync(appUser, user.Password);
@@ -43,7 +45,7 @@ namespace TaramaMVC.Controllers
             }
             return View(user);
         }
-        public async Task<IActionResult> Update(string id)
+        public async Task<IActionResult> Edit(string id)
         {
             AppUser user = await userManager.FindByIdAsync(id);
             if (user != null)
@@ -53,7 +55,8 @@ namespace TaramaMVC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(string id, string email, string password)
+       
+        public async Task<IActionResult> Edit(string id, string email, string password)
         {
             AppUser user = await userManager.FindByIdAsync(id);
             if (user != null)
@@ -87,5 +90,23 @@ namespace TaramaMVC.Controllers
             foreach (IdentityError error in result.Errors)
                 ModelState.AddModelError("", error.Description);
         }
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id)
+        {
+            AppUser user = await userManager.FindByIdAsync(id);
+            if (user != null)
+            {
+                IdentityResult result = await userManager.DeleteAsync(user);
+                if (result.Succeeded)
+                    return RedirectToAction("Index");
+                else
+                    Errors(result);
+            }
+            else
+                ModelState.AddModelError("", "User Not Found");
+            return View("Index", userManager.Users);
+        }
+
+
     }
 }

@@ -10,7 +10,7 @@
 </div>
 
 <div class="text-xxl-start md-2 mt-2">
-    <input type="button" class="btn btn-secondary btn-sm" onclick="tableToExcel('pvtTable', 'PivotDownload')" value="Export to Excel">
+    <input type="button" class="btn btn-secondary btn-sm" onclick="exportReportToExcel()" value="Export to Excel">
 </div>
 <script>
 
@@ -48,12 +48,12 @@
                 }
             })
             .then(function (response) {
-                console.log(response);
+                //console.log(response);
                 if (response.ok) {
-                    console.log("Ok");
+                    //console.log("Ok");
                     return response.text();
                 } else {
-                    console.log("Response Not Ok");
+                    //console.log("Response Not Ok");
                     throw Error("Response Not Ok");
 
                 }
@@ -61,41 +61,43 @@
             })
             .then(function (text) {
                 try {
-                    console.log(text);
+                    //console.log(text);
                     return JSON.parse(text);
 
                 } catch (err) {
-                     console.log("Method Not Found");
+                     //console.log("Method Not Found");
                     throw Error("Method Not Found");
                 }
 
             })
             .then(function (responseJSON) {
-                console.log(responseJSON);
+                //console.log(responseJSON);
                 OzetVeriler = responseJSON
                 drawPivot();
 
             });
     }
-    console.log("getpivot çalıştırılıyor");
+    //console.log("getpivot çalıştırılıyor");
     getPivot();
 
-    var tableToExcel = (function () {
-        var uri = 'data:application/vnd.ms-excel;base64,'
-            , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>{table}</table></body></html>'
-            , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
-            , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
-        return function (table, name) {
-            if (!table.nodeType) table = document.getElementById(table)
-            var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
-            window.location.href = uri + base64(format(template, ctx))
-        }
-    })()
+  
 </script>
 
 
 
-@*@section Scripts
+@section Scripts
     {
- 
-}*@
+     <script src="https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js"></script>
+     <script>
+        function exportReportToExcel() {
+            let table = document.getElementsByTagName("table"); // you can use document.getElementById('tableId') as well by providing id to the table tag
+            TableToExcel.convert(table[0], { // html code may contain multiple tables so here we are refering to 1st table tag
+                name: `export.xlsx`, // fileName you could use any name
+                sheet: {
+                    name: 'Sheet 1' // sheetName bunu exportReportToExcel(this)
+                }
+            });
+        }
+
+     </script>
+}

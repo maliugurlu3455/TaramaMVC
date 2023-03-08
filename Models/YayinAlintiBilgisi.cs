@@ -6,8 +6,9 @@ namespace TaramaMVC.Models
     {
         public int Id { get; set; }
 
-        
-        public int YayinId { get; set; }
+        [Column("YayinId")]
+        public int personelYayinBilgileriId { get; set; }
+        public PersonelYayinBilgileri personelYayinBilgileri { get; set; }
         public string Tip { get; set; }
         public string Ad { get; set; }
     }

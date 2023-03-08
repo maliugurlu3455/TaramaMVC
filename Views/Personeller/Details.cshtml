@@ -4,7 +4,7 @@
     ViewData["Title"] = "Akademik Personel Detayları";
 }
 
-<div>
+<div class="container">
  
     <dl class="row">
         <dt class = "col-sm-2">
@@ -39,8 +39,9 @@
             @Html.DisplayFor(model => model.User)
         </dd>
     </dl>
-</div>
+
 <div class="row">
     <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-secondary" >Düzenle</a> |
     <a asp-action="Index" class="btn btn-secondary" >Geri Dön</a>
+</div>
 </div>

@@ -13,8 +13,8 @@ namespace TaramaMVC.Models
         public DbSet<PersonelYayinBilgileri> PersonelYayinBilgileris { get; set; } = default!;
         public DbSet<Personel> Personels { get; set; } = default!;
         public DbSet<AnaBilimDali> AnaBilimDals { get; set; } = default!;
-       
-      
 
+
+     
     }
 }
