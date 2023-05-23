@@ -21,4 +21,56 @@
         <input asp-for="Password" type="password" class="form-control" />
     </div>
     <button type="submit" class="btn btn-primary">Create</button>
+    
 </form>
+<button class="btn btn-danger" onclick="getPivot()">Tıkla</button>
+<div class="form-group" id="veriler">
+</div>
+<script>
+function getPivot(){
+    //console.log("getPivot");
+        const UserNameId= document.getElementById("Name").val();
+        console.log(UserNameId);
+        return fetch(`/Yonetim/CreateSearchUser/${UserNameId}`,
+    {
+        method:'GET',
+        headers:{
+           'Content-Type': 'application/json;charset=UTF-8'
+
+                },
+        data: {
+                   UserName: name.val(),
+    })
+    .then(function(response){
+         console.log(response);
+    if(response.ok){
+         console.log("Ok");
+        return response.text();
+                    } else {
+                        console.log("Response Not Ok");
+                        throw Error("Response Not Ok");
+
+                            }
+
+                            })
+    .then(function(text){
+            try{
+                 console.log(text);
+                return JSON.parse(text);
+
+            }catch(err){
+                console.log("Method Not Found");
+                throw Error("Method Not Found");
+                        }
+
+                        })
+    .then(function (responseJSON){
+            console.log(responseJSON);
+                document.getElementById('veriler').append(responseJSON);
+         
+
+                                    })
+}
+
+    //getPivot();
+    </script>

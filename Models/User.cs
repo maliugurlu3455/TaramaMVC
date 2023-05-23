@@ -2,7 +2,7 @@
 
 namespace TaramaMVC.Models
 {
-    public class User
+    public class User: BaseEntity
     {
         [Required]
         public string Name { get; set; }

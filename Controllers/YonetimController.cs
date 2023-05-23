@@ -1,10 +1,14 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using HtmlAgilityPack;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Text;
 using TaramaMVC.Models;
 
 namespace TaramaMVC.Controllers
 {
-
+  
     public class YonetimController : Controller
     {
         private UserManager<AppUser> userManager;
@@ -20,9 +24,44 @@ namespace TaramaMVC.Controllers
         {
             return View(userManager.Users);
         }
+      
+        public  IActionResult CreateSearchUser(string UserName)
+        {
+            HtmlDocument doc = null;
+
+            string[] UserID = new string[] { string.Empty, string.Empty, string.Empty };
+            try
+            {
+                HtmlWeb web = new HtmlWeb();
+                var url = new Uri(" https://scholar.google.com/citations?view_op=search_authors&mauthors=" + UserName + "&hl=tr&oi=ao");
+                
+
+                doc = web.Load(url);
+                var nod = doc.DocumentNode.SelectNodes("//h3[@class = 'gs_ai_t']");
+                if (nod != null)
+                {
+                    int a = 0;
+                    foreach (var item in nod)
+                    {
+                        UserID[a] = item.InnerText;
+                        a++;
+                    }
+
+                    return Content(doc.Text, System.Net.Mime.MediaTypeNames.Text.Html, Encoding.GetEncoding("iso-8859-9"));
+                }
+
+            }
+            catch
+            {
+                // UserID = new string[] { string.Empty, string.Empty, string.Empty };
+            }
+            return Content("");
+        }
+     
         public ViewResult Create() => View();
 
         [HttpPost]
+        ////[Authorize]
         public async Task<IActionResult> Create(User user)
         {
             if (ModelState.IsValid)
@@ -45,6 +84,7 @@ namespace TaramaMVC.Controllers
             }
             return View(user);
         }
+        ////[Authorize]
         public async Task<IActionResult> Edit(string id)
         {
             AppUser user = await userManager.FindByIdAsync(id);
@@ -53,9 +93,9 @@ namespace TaramaMVC.Controllers
             else
                 return RedirectToAction("Index");
         }
-
+      
         [HttpPost]
-       
+        ////[Authorize]
         public async Task<IActionResult> Edit(string id, string email, string password)
         {
             AppUser user = await userManager.FindByIdAsync(id);
@@ -81,7 +121,7 @@ namespace TaramaMVC.Controllers
                 }
             }
             else
-                ModelState.AddModelError("", "User Not Found");
+                ModelState.AddModelError("", "Kullanıcı Bulunamadı");
             return View(user);
         }
 
@@ -90,20 +130,35 @@ namespace TaramaMVC.Controllers
             foreach (IdentityError error in result.Errors)
                 ModelState.AddModelError("", error.Description);
         }
+
+
+
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
-            AppUser user = await userManager.FindByIdAsync(id);
-            if (user != null)
+            try
             {
-                IdentityResult result = await userManager.DeleteAsync(user);
-                if (result.Succeeded)
-                    return RedirectToAction("Index");
+                AppUser user = await userManager.Users.Where(t=>t.Id==id).FirstOrDefaultAsync();
+                if (user != null)
+                {
+                    IdentityResult result = await userManager.DeleteAsync(user);
+                    
+                    
+                    
+                    if (result.Succeeded)
+                        return RedirectToAction("Index");
+                    else
+                        Errors(result);
+                }
                 else
-                    Errors(result);
+                    ModelState.AddModelError("", "User Not Found");
             }
-            else
-                ModelState.AddModelError("", "User Not Found");
+            catch (Exception ex)
+            {
+
+                ModelState.AddModelError("Genel hata :", ex.Message);
+            }
+           
             return View("Index", userManager.Users);
         }
 

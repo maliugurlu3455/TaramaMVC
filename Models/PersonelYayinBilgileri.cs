@@ -2,9 +2,8 @@
 
 namespace TaramaMVC.Models
 {
-    public class PersonelYayinBilgileri
-    {
-        public int Id { get; set; }
+    public class PersonelYayinBilgileri: BaseEntity
+    { 
         public int PersonelId { get; set; }
         public Personel Personel { get; set; }
         public string Baslik { get; set; }
@@ -13,7 +12,5 @@ namespace TaramaMVC.Models
         public int Yil { get; set; }
         
         public DateTime UpdateDate { get; set; }
-
-
     }
 }

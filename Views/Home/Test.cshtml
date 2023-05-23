@@ -1,0 +1,76 @@
+﻿<div id="divortam" name="divortam" class="container container-sm">
+
+    <iframe src="https://scholar.google.com"
+            frameborder="0">
+    </iframe>
+</div>
+
+<input  type="submit" class="btn btn-primary" onclick="testscript()"  value="Tıkla" />   
+
+<script type="text/javascript" >
+
+    function testscript() {
+        const headers = new Headers({
+           
+            'authority': 'scholar.google.com',
+            'method': 'GET',
+            'scheme': 'https'
+    'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+            'accept-encoding': 'gzip, deflate, br',
+            'accept-language': 'tr,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+            'cache-control': 'no-cache',
+             'pragma': 'no-cache',
+             'sec-ch-ua-model': '',
+    'sec-ch-ua-platform': 'Windows',
+    'sec-ch-ua-platform-version': '10.0.0',
+    'sec-ch-ua-wow64': '? 0',
+    'sec-fetch-dest': 'document',
+            'sec-fetch-mode': 'navigate',
+            'sec-fetch-site': 'none',
+            'sec-fetch-user': '?1',
+            'upgrade-insecure-requests': '1',
+            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36'
+        });
+
+        fetch('https://scholar.google.com/scholar?hl=tr&as_sdt=2005&sciodt=0,5&cites=4986682506114850678&scipsc=', { headers })
+            .then(response => response.text())
+            .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+
+                // Tüm div etiketlerini seçmek için:
+               // const divTags = doc.querySelectorAll('div');
+
+                // Seçtiğiniz div öğelerini gezin ve içeriğini alarak container div öğesine ekleyin:
+                divTags.forEach(div => {
+                    document.getElementById('divortam').innerHTML += doc; //div.innerHTML;
+                });
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+
+       
+    }
+    
+    //document.addEventListener('DOMContentLoaded', function () {
+    //    fetch('https://scholar.google.com/scholar?oi=bibs&hl=tr&cites=4986682506114850678')
+    //        .then(response => response.text())
+    //        .then(html => {
+    //            const parser = new DOMParser();
+    //            const doc = parser.parseFromString(html, 'text/html');
+    //            const divTags = doc.querySelectorAll('div');
+    //            const divOrtam = document.getElementById('divortam');
+    //            divTags.forEach(div => {
+    //                divOrtam.appendChild(div.cloneNode(true));
+    //            });
+    //        })
+    //        .catch(error => {
+    //            console.error(error);
+    //        });
+    //});
+
+
+</script>
+

@@ -34,6 +34,11 @@
                 <input asp-for="User" class="form-control" placeholder="User ID" />
                 <span asp-validation-for="User" class="text-danger"></span>
             </div>
+                <div class="form-group md-2 mt-2">
+                    @* <label asp-for="SurName" class="control-label"></label>*@
+                    <input asp-for="ApiKey" class="form-control" placeholder="Api Key" />
+                    <span asp-validation-for="ApiKey" class="text-danger"></span>
+                </div>
              <div class="form-group md-2 mt-2">
                 @* <label asp-for="SurName" class="control-label"></label>*@
                 <input asp-for="Alintilanma" class="form-control" placeholder="Alintilanma" />
@@ -52,4 +57,8 @@
 </div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+@foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+{
+    <div>@error.ErrorMessage</div>
 }

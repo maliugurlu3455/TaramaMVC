@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using TaramaMVC.Models;
 
 namespace TaramaMVC.Controllers
 {
+    //[Authorize]
     public class PersonelYayinBilgileriController : Controller
     {
         private readonly DatabaseContext _context;
@@ -24,6 +26,7 @@ namespace TaramaMVC.Controllers
         //    return View(await _context.PersonelYayinBilgileris.Where(y=>y.Personel.Name==).ToListAsync());
         //}
         // GET: PersonelYayinBilgileri
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
 

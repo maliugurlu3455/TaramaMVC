@@ -3,15 +3,25 @@
     ViewData["Title"] = "Roller";
 }
 <div class="container">
-    <div class="row" >
-        <h1 class="bg-info text-white">Tüm Roller</h1>
-        <a asp-action="Create" class="btn btn-secondary">Create a Role</a>
+    <div class="row md-2 mt-2">
+        <h1 class="bg-info text-white">Roller</h1>
+       
     </div>
-    <div class="row">
+    <div class="col md-2 mt-2 ">
+
+        <a asp-action="Create" class="btn btn-primary">Create a Role</a>
+      
+    </div>
+    <div class="row md-2 mt-2">
     <div class="table-responsive">
 <table id="tblliste" class="table table-bordered table-hover table-striped">
     <thead>
-        <tr><th>ID</th><th>Name</th><th>Users</th><th>Update</th><th>Delete</th></tr>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Users</th>
+            <th>Update</th>
+            <th>Delete</th></tr>
     </thead>
     <tbody>
     @foreach (var role in Model)
