@@ -34,6 +34,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.Personel.ScholarName)
             </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Personel.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Personel.SurName)
+                    </th>
             <th>
                 @Html.DisplayNameFor(model => model.UpdateDate)
             </th>
@@ -67,6 +73,16 @@
                             @Html.DisplayFor(modelItem => item.Personel.ScholarName)
 
                 </td>
+                        <td>
+
+                            @Html.DisplayFor(modelItem => item.Personel.Name)
+
+                        </td>
+                        <td>
+
+                            @Html.DisplayFor(modelItem => item.Personel.SurName)
+
+                        </td>
             <td>
                 @Html.DisplayFor(modelItem => item.UpdateDate)
             </td>

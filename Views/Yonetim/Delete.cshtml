@@ -1,37 +1,59 @@
-﻿@model IEnumerable<AppUser>
+﻿@model AppUser
 @{
-    ViewData["Title"] = "READ USER";
+    ViewData["Title"] = "Kullanıcı Sil";
 }
+<div class="container-sm">
+    <h3 class="bg-warning text-dark">Silmek istediğinize emin misiniz ?</h3>
 
-<h1 class="bg-info text-white">All Users</h1>
-<a asp-action="Create" class="btn btn-secondary">Create a User</a>
+   @* <div class="d-inline-flex md-2 mt-2">
+        <a asp-action="Create" class="form-control btn btn-light ">
+            <svg class="bi me-2 mx-auto mb-1" width="16" height="16"><use xlink:href="#create1" /></svg>
+            Yeni Kullanıcı
+        </a>
+    </div>*@
+    <form asp-action="Delete">
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Id)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Id)
+            </dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.UserName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.UserName)
+            </dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+        </dl>
 
-<table class="table table-sm table-bordered">
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Update</th>
-        <th>Delete</th>
-    </tr>
-    @foreach (AppUser user in Model)
-    {
-        <tr>
-            <td>@user.Id</td>
-            <td>@user.UserName</td>
-            <td>@user.Email</td>
-            <td>
-                <a class="btn btn-sm btn-primary" asp-action="Update" asp-route-id="@user.Id">
-                    Update
-                </a>
-            </td>
-            <td>
-                <form asp-action="Delete" asp-route-id="@user.Id" method="post">
-                    <button type="submit" class="btn btn-sm btn-danger">
-                        Delete
-                    </button>
-                </form>
-            </td>
-        </tr>
-    }
-</table>
+
+        <input type="hidden" asp-for="Id" />
+        <div class="row">
+            <div class="col form-group md-2 mt-2">
+                <input type="submit" value="Delete" class="form-control btn btn-danger" />
+            </div>
+        </div>
+       
+    </form>
+    <div class="row">
+        <div class="col form-group md-2 mt-2">
+            <a asp-action="Index" class="form-control btn btn-secondary">
+                <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#back1" /></svg>
+                Geri
+            </a>
+        </div>
+    </div>
+</div>
+
+

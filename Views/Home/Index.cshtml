@@ -7,8 +7,8 @@
 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Getir">Getir</a>*@
 <div class="container">
     <div class="row mt-2">
-    <div class="bg-light">
-            <h4 class="alert alert-secondary">  @ViewData["Title"]</h4>
+        <div class="bg-light">
+            <h4 class="text-muted">  @ViewData["Title"]</h4>
         </div>
     </div>
     <div class="row mt-2">
@@ -16,7 +16,7 @@
     </div>
 </div>
 
-<script>
+<script type="text/javascript">
     $(document).ready(function () {
         $.getJSON('/Home/ChartHepsiniGetir', function (data) {
             var ctx = $('#teacherChart');
@@ -78,4 +78,5 @@
             });
         });
     });
+
 </script>

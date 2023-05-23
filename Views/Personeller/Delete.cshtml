@@ -4,9 +4,8 @@
     ViewData["Title"] = "Akademik Personel Sil Mesajı";
 }
 
-
-<h3>Silmek istediğinize emin misiniz ?</h3>
-<div>
+<div class="container-sm">
+    <h3 class="bg-warning text-dark">Silmek istediğinize emin misiniz ?</h3>
 
     <dl class="row">
         <dt class = "col-sm-2">
@@ -22,16 +21,40 @@
             @Html.DisplayFor(model => model.SurName)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AnaBilimDallari)
+            @Html.Label("AnaBilimDallari")
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AnaBilimDallari.Id)
+            @Html.DisplayFor(model => model.AnaBilimDallari.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.Label("Google Scholar Name")
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ScholarName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.Label("Google Scholar User ID")
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.User)
         </dd>
     </dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Sil" class="btn btn-danger" /> |
-        <a asp-action="Index">Geri Dön</a>
+        <div class="row">
+            <div class="col form-group md-2 mt-2">
+                <input type="submit" value="Delete" class="form-control btn btn-danger" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col form-group md-2 mt-2">
+                <a asp-action="Index" class="form-control btn btn-secondary">
+                    <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#back1" /></svg>
+                    Geri
+                </a>
+            </div>
+        </div>
     </form>
+
 </div>

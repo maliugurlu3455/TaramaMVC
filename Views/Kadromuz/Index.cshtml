@@ -5,8 +5,13 @@
     int RowNo = 0;
 }
 <div class="container-sm">
-  
-    <div class="table-responsive-sm">
+    <div class="d-inline-flex md-2 mt-2">
+        <a asp-action="Create" class="form-control btn btn-primary ">
+            <svg class="bi me-2 mx-auto mb-1" width="16" height="16"><use xlink:href="#create1" /></svg>
+            Yeni Kayıt
+        </a>
+    </div>
+    <div class="table-responsive md-2 mt-2">
         <table class="table table-bordered table-hover table-striped align-center">
             <thead class="table-light">
                 <tr>
@@ -17,12 +22,7 @@
                         @Html.Label("Ana Bilim Dalları")
                     </th>
                     <th class="align-middle">
-                        <div class="d-inline-flex">
-                            <a asp-action="Create" class="form-control btn btn-light ">
-                                <svg class="bi me-2 mx-auto mb-1" width="16" height="16"><use xlink:href="#create1" /></svg>
-            Yeni Kayıt
-        </a>
-    </div></th>
+                       </th>
                 </tr>
             </thead>
             <tbody>

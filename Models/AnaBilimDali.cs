@@ -11,6 +11,6 @@ namespace TaramaMVC.Models
         [Required]
         public string Name { get; set; }
 
-        public ICollection<Personel> Personeller { get; set; }  
+        public ICollection<Personel>? Personeller { get; set; }  
     }
 }

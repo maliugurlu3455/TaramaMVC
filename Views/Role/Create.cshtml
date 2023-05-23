@@ -2,16 +2,34 @@
 @{
     ViewData["Title"] = "CREATE ROLE";
 }
-
-<h1 class="bg-info text-white">Create a Role</h1>
+<div class="container-sm">
+        
+<h1 class="bg-light text-white">Role Ekle</h1>
 
 <div asp-validation-summary="All" class="text-danger"></div>
 
 <form asp-action="Create" method="post">
-    <div class="form-group">
-        <label for="name">Name:</label>
-        <input name="name" class="form-control" />
+    <div class="form-group ">
+            <label for="name" class="m-lg-3">Role Adı :</label>
+        <input name="name" class="form-control" placeholder="Rol Adı giriniz" />
     </div>
-    <button type="submit" class="btn btn-primary">Create</button>
-    <a asp-action="Index" class="btn btn-secondary">Back</a>
+    <div class="row">
+        <div class="col form-group md-2 mt-2">
+            @* <input type="submit" value="Create" class="btn btn-secondary" />*@
+            <button type="submit" class="form-control btn-secondary">
+                <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#save1" /></svg>
+                Kaydet
+            </button>
+        </div>
+    </div>
+    
 </form>
+<div class="row">
+    <div class="col form-group md-2 mt-2">
+        <a asp-action="Index" class="form-control btn btn-secondary">
+            <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#back1" /></svg>
+            Geri
+        </a>
+    </div>
+</div>
+</div>

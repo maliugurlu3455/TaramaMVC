@@ -1,12 +1,11 @@
 ﻿@model IEnumerable<TaramaMVC.Models.YayinAlintiBilgisi>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Yayın Alıntı Bilgileri";
     int RowNo = 0;
 }
 <div class="Container">
-
-<div class="Row">
+ 
 <div class="table-responsive">   
 <table id="tblliste" class="table table-bordered table-hover table-striped">
     <thead>
@@ -24,12 +23,28 @@
                         <th>
                             @Html.DisplayNameFor(model => model.personelYayinBilgileri.Baslik)
                         </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Title)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Ad)
+                        </th>
+                        <th>
+                            @Html.Label("SID")
+                        </th>
+                        <th>
+                            @Html.Label("PublicationInfo")
+                        </th>
+                        <th>
+                            @Html.Label("Snippet")
+                        </th>
+                        <th>
+                            @Html.Label("Link")
+                        </th>
             <th>
                 @Html.DisplayNameFor(model => model.Tip)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Ad)
-            </th>
+           
             <th></th>
         </tr>
     </thead>
@@ -51,17 +66,37 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.personelYayinBilgileri.Baslik)
                             </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Ad)
+                            </td>
+                            <td>
+                                <a target="_blank" href=@String.Format("https://scholar.google.com/scholar?q=info:{0}:scholar.google.com/&output=cite&hl=tr",item.SID)> @Html.DisplayFor(modelItem => item.SID)</a>  
+                               
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PublicationInfo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Snippet)
+                            </td>
+                            <td>
+                                <a target="_blank" href=@String.Format("{0}",item.Link)> Link)</a>
+                            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Tip)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ad)
-            </td>
+           
             <td>
                                 <div class="btn-group btn-group-justified">
                                 <a asp-action="Details" asp-route-id="@item.Id" class="btn-sm btn-block">
                                     <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#view1" /></svg>İncele
                                 </a>
+                             @*       <a asp-action="Ayrinti" asp-route-id="@item.Id" class="btn-sm btn-block">
+                                        <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#view1" /></svg>İncele
+                                    </a>*@
                                 @if (User?.Identity?.IsAuthenticated ?? false)
                                 {
                                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn-sm btn btn-block">
@@ -78,7 +113,7 @@
     </tbody>
 </table>
 </div>
-</div>
+ 
 </div>
 <script>
     $(document).ready(function () {

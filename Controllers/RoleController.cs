@@ -1,24 +1,25 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using TaramaMVC.Models;
 
 namespace TaramaMVC.Controllers
 {
+    //[Authorize]
     public class RoleController : Controller
     {
         private RoleManager<IdentityRole> roleManager;
-        public RoleController(RoleManager<IdentityRole> roleMgr)
+        private UserManager<AppUser> userManager;
+
+        public RoleController(RoleManager<IdentityRole> roleMgr, UserManager<AppUser> userMrg)
         {
             roleManager = roleMgr;
+            userManager = userMrg;
         }
 
         public ViewResult Index() => View(roleManager.Roles);
-
-        private void Errors(IdentityResult result)
-        {
-            foreach (IdentityError error in result.Errors)
-                ModelState.AddModelError("", error.Description);
-        }
+        // other methods
         public IActionResult Create() => View();
 
         [HttpPost]
@@ -34,6 +35,65 @@ namespace TaramaMVC.Controllers
             }
             return View(name);
         }
+        [AllowAnonymous]
+        private void Errors(IdentityResult result)
+        {
+            foreach (IdentityError error in result.Errors)
+                ModelState.AddModelError("", error.Description);
+        }
+
+        public async Task<IActionResult> Update(string id)
+        {
+            IdentityRole role = await roleManager.FindByIdAsync(id);
+            List<AppUser> members = new List<AppUser>();
+            List<AppUser> nonMembers = new List<AppUser>();
+            foreach (AppUser user in userManager.Users)
+            {
+                var list = await userManager.IsInRoleAsync(user, role.Name) ? members : nonMembers;
+                list.Add(user);
+            }
+            return View(new RoleEdit
+            {
+                Role = role,
+                Members = members,
+                NonMembers = nonMembers
+            });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(RoleModification model)
+        {
+            IdentityResult result;
+            if (ModelState.IsValid)
+            {
+                foreach (string userId in model.AddIds ?? new string[] { })
+                {
+                    AppUser user = await userManager.FindByIdAsync(userId);
+                    if (user != null)
+                    {
+                        result = await userManager.AddToRoleAsync(user, model.RoleName);
+                        if (!result.Succeeded)
+                            Errors(result);
+                    }
+                }
+                foreach (string userId in model.DeleteIds ?? new string[] { })
+                {
+                    AppUser user = await userManager.FindByIdAsync(userId);
+                    if (user != null)
+                    {
+                        result = await userManager.RemoveFromRoleAsync(user, model.RoleName);
+                        if (!result.Succeeded)
+                            Errors(result);
+                    }
+                }
+            }
+
+            if (ModelState.IsValid)
+                return RedirectToAction(nameof(Index));
+            else
+                return await Update(model.RoleId);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
@@ -51,4 +111,5 @@ namespace TaramaMVC.Controllers
             return View("Index", roleManager.Roles);
         }
     }
+
 }

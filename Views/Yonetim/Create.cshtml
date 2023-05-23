@@ -2,12 +2,12 @@
 @{
     ViewData["Title"] = "CREATE USER";
 }
-
+<div class="container-sm">
 <h1 class="bg-info text-white">Create User</h1>
-<a asp-action="Index" class="btn btn-secondary">Back</a>
+
 <div asp-validation-summary="All" class="text-danger"></div>
 
-<form method="post">
+    <form asp-action="Create" class="form-control">
     <div class="form-group">
         <label asp-for="Name"></label>
         <input asp-for="Name" class="form-control" />
@@ -20,5 +20,18 @@
         <label asp-for="Password"></label>
         <input asp-for="Password" type="password" class="form-control" />
     </div>
-    <button type="submit" class="btn btn-primary">Create</button>
+        <div class="Row md-2 mt-2">
+        <button type="submit" class="form-control btn-secondary">
+            <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#save1" /></svg>
+            Kaydet
+        </button>
+        </div>
+            <div class="Row md-2 mt-2">
+        <a asp-action="Index" class="form-control btn btn-secondary">
+            <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#back1" /></svg>
+            Geri
+        </a>
+        </div>
 </form>
+
+</div>

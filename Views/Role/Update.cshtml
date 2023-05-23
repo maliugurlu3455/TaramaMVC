@@ -1,0 +1,66 @@
+﻿@model RoleEdit
+@{
+    ViewData["Title"] = "Role Güncelle";
+}
+<div class="container">
+    <h2 class="bg-light text-secondary">ROLE GÜNCELLE</h2>
+ 
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form method="post">
+    <input type="hidden" name="roleName" value="@Model.Role.Name" />
+    <input type="hidden" name="roleId" value="@Model.Role.Id" />
+
+        <h3 class="bg-light text-dark">@Model.Role.Name Rolüne Kullanıcı Ekle</h3>
+    <table class="table table-bordered table-sm">
+        @if (Model.NonMembers.Count() == 0)
+        {
+            <tr><td colspan="2">All Users Are Members</td></tr>
+        }
+        else
+        {
+            @foreach (AppUser user in Model.NonMembers)
+            {
+                <tr>
+                    <td>@user.UserName</td>
+                    <td>
+                        <input type="checkbox" name="AddIds" value="@user.Id">
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+
+        <h3 class="bg-light text-dark">@Model.Role.Name Rolünden Kullanıcı Çıkart  </h3>
+    <table class="table table-bordered table-sm">
+        @if (Model.Members.Count() == 0)
+        {
+            <tr><td colspan="2">No Users Are Members</td></tr>
+        }
+        else
+        {
+            @foreach (AppUser user in Model.Members)
+            {
+                <tr>
+                    <td>@user.UserName</td>
+                    <td>
+                        <input type="checkbox" name="DeleteIds" value="@user.Id">
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+        <div class="Row md-2 mt-2">
+            <button type="submit" class="form-control btn-secondary">
+                <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#save1" /></svg>
+                Kaydet
+            </button>
+        </div>
+</form>
+    <div class="Row md-2 mt-2">
+        <a asp-action="Index" class="form-control btn btn-secondary md-2 mt-2">
+            <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#back1" /></svg>
+            Geri
+        </a>
+    </div>
+</div>

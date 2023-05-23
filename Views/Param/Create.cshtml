@@ -1,0 +1,58 @@
+﻿@model TaramaMVC.Models.Parametreler
+
+@{
+    ViewData["Title"] = "Parametreler Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-sm">
+    
+        <form asp-action="Create">
+        <div class="row">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        
+            <div class="col form-group md-2 mt-2">
+                @* <label asp-for="Name" class="control-label"></label>*@
+                <input asp-for="Name" class="form-control" placeholder="Name Giriniz" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col form-group md-2 mt-2">
+                @* <label asp-for="Name" class="control-label"></label>*@
+                <input asp-for="Value" class="form-control" placeholder="Value Giriniz" />
+                <span asp-validation-for="Value" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col form-group md-2 mt-2">
+                @* <label asp-for="Name" class="control-label"></label>*@
+                <select asp-for="GrupId" class="form-control" asp-items="ViewBag.GrupId"></select>
+                <span asp-validation-for="GrupId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col form-group md-2 mt-2">
+                @* <input type="submit" value="Create" class="btn btn-secondary" />*@
+                <button type="submit" class="form-control btn-secondary">
+                    <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#save1" /></svg>
+                    Kaydet
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col form-group md-2 mt-2">
+                <a asp-action="Index" class="form-control btn btn-secondary">
+                    <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#back1" /></svg>
+                    Geri
+                </a>
+            </div>
+        </div>
+        </form>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

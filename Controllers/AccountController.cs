@@ -1,14 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using NuGet.Protocol.Plugins;
 using TaramaMVC.Models;
 
 namespace TaramaMVC.Controllers
 {
-   
-        [Authorize]
-        public class AccountController : Controller
+
+    // ialtin@ogu.edu.tr 
+    public class AccountController : Controller
         {
             private UserManager<AppUser> userManager;
             private SignInManager<AppUser> signInManager;
@@ -20,50 +19,78 @@ namespace TaramaMVC.Controllers
             }
 
             [AllowAnonymous]
-            public IActionResult Login(string returnUrl)
+            public IActionResult Login()
             {
                 Login login = new Login();
-                login.ReturnUrl = returnUrl;
+                
                 return View(login);
             }
 
             [HttpPost]
             [AllowAnonymous]
             [ValidateAntiForgeryToken]
-            public async Task<IActionResult> Login(Login  login)
+            public async Task<IActionResult> Login(Login  login, string? returnUrl="")
             {
                 if (ModelState.IsValid)
                 {
              
-                    AppUser appUser = await userManager.FindByEmailAsync(login.Email);
+                    var appUser = await userManager.FindByEmailAsync(login.Email);
                     if (appUser != null)
                     {
+                  
                         await signInManager.SignOutAsync();
                     Microsoft.AspNetCore.Identity.SignInResult result = await signInManager.PasswordSignInAsync(appUser, login.Password, login.Remember, false);
 
                     if (result.Succeeded)
                     {
 
-                        if (login.ReturnUrl != null)
+                        if (!string.IsNullOrEmpty(returnUrl))
                         {
-                            return Redirect(login.ReturnUrl ?? "/");
+                            if (Url.IsLocalUrl(returnUrl))
+                            {
+                                return Redirect(returnUrl ?? "/");
+                            }
+                            else
+                            {
+                                return RedirectToAction("Index", "Home");
+                            }
+                            
                         }
                         else
                         {
                             return RedirectToAction("Index", "Home");
                         }
                     }
-                           
+                    else
+                    {
+                        ModelState.AddModelError(nameof(login.Email), "Login Failed: Invalid Email or password");
+                      
                     }
-                    ModelState.AddModelError(nameof(login.Email), "Login Failed: Invalid Email or password");
-                }
-                return View(login);
-            }
 
+                }
+                else
+                {
+                    ModelState.AddModelError(nameof(login.Email), "Login Failed: Invalid Email or password");
+                   
+                }
+                   
+                }
+            return View(login);
+        }
+        [AllowAnonymous]
         public async Task<IActionResult> Logout()
         {
+            try
+            {
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
             await signInManager.SignOutAsync();
-            HttpContext.Session.Clear();
+           // HttpContext.Session.Clear();
             return RedirectToAction("Index", "Home");
         }
         //public  IActionResult Logout()
@@ -72,7 +99,13 @@ namespace TaramaMVC.Controllers
         //    HttpContext.Session.Clear();
         //    return RedirectToAction("Index", "Home");
         //}
+        [AllowAnonymous]
         public IActionResult Index()
+        {
+            return View();
+        }
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
         {
             return View();
         }

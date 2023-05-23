@@ -4,7 +4,9 @@
     ViewData["Title"] = "Ana Bilim Dalı Düzenleme";
 }
 <div class="container-sm">
+     <form asp-action="Edit">
     <div class="table-responsive-sm">
+       
         <table class="table table-bordered table-hover table-striped align-middle">
             <thead class="table-light">
                 <tr>
@@ -26,25 +28,29 @@
                     </td>
                 <tr>
                     <td>
-                     @*   <input type="submit" value="Kaydet" class="form-control btn-secondary" />*@
-                        <button type="submit" class="form-control btn-secondary">
+                            <div class="Row md-2 mt-2">
+                            <button type="submit" class="form-control btn-secondary">
                             <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#save1" /></svg>
                             Kaydet
                         </button>
+                            </div>
                     </td>
                 </tr>
                 <tr>
             <td>
-
-                        <a asp-action="Index" class="form-control btn btn-secondary">
+                            <div class="Row md-2 mt-2">
+                            <a asp-action="Index" class="form-control btn btn-secondary md-2 mt-2">
                             <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#back1" /></svg>
                             Geri
-                        </a>
+                            </a>
+        </div>
                     </td>
                 </tr>
             </tbody>
         </table>
-        </div>
+        
+    </div>
+    </form>
 </div>
 
 @section Scripts {

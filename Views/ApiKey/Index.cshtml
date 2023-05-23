@@ -1,0 +1,92 @@
+﻿@model IEnumerable<TaramaMVC.Models.ApiKeys>
+
+@{
+    ViewData["Title"] = "Serp Api Keys";
+    int RowNo = 0;
+}
+
+
+<div class="container md-2 mt-2">
+    <h1 class="bg-light text-secondary">@ViewData["Title"]  </h1>
+    <div class="col md-2 mt-2 text-md-end">
+       
+        <a asp-action="Create" class="btn btn-secondary">Create a Serp Api Key</a>
+        <a class="btn btn-secondary"  asp-action="Sifirla">Kullanımları Sıfırla</a>
+    </div>
+    <div class="row md-2 mt-2">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover table-striped table-dashboard data-table" id="tblliste">
+                <thead>
+
+                    <tr>
+                        <th>
+                            @Html.Label("SıraNo")
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Key)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Sayi)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.IsTamam)
+                        </th>
+                       <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @{
+                                    RowNo++;
+                                } @RowNo
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Key)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Sayi)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IsTamam)
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-justified">
+
+
+                                    @if (User?.Identity?.IsAuthenticated ?? false)
+                                    {
+                                      
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn-sm btn btn-block">
+                                            <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#edit1" /></svg>Düzenle
+                                        </a>
+                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn-sm btn-block">
+                                            <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#delete1" /></svg>Sil
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn-sm btn-block">
+                                            <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#view1" /></svg>İncele
+                                        </a>
+                                    }
+
+
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#tblliste').DataTable();
+    });
+</script>
+

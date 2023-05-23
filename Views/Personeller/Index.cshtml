@@ -10,19 +10,32 @@
     <div class="row md-2 mt-2">
         <div class="col md-2 mt-2 text-md-end">
         <a class="btn btn-secondary btn-sm" asp-area="" asp-controller="Personeller" asp-action="VeriGuncelle">Akademik Yayın Güncelle</a>
-            <a class="btn btn-secondary btn-sm" asp-area="" asp-controller="Personeller" asp-action="YayinAlintiGuncelle">Yayın Alıntı Güncelle</a>
-            <a class="btn btn-primary btn-sm" asp-area="" asp-controller="Personeller" asp-action="YayinAlinti">Yayın Alıntı</a>
+      @*  <a class="btn btn-secondary btn-sm" asp-area="" asp-controller="Personeller" asp-action="AlintiGuncelleApi">Alıntı Güncelle Api</a>*@
+       @* <a class="btn btn-secondary btn-sm" asp-area="" asp-controller="Personeller" asp-action="YayinAlintiGuncelle">Yayın Alıntı Güncelle</a>
+        <a class="btn btn-primary btn-sm" asp-area=""   asp-controller="Personeller" asp-action="YayinAlinti">Yayın Alıntı</a>*@
         <a class="btn btn-secondary btn-sm" asp-area="" asp-controller="Personeller" asp-action="VerileriSil">Akademik Yayınları Sil</a>
-    <a class="btn btn-secondary btn-sm" asp-area="" asp-controller="Personeller" asp-action="Test">Test</a>
+            <a class="btn btn-secondary btn-sm" asp-area="" asp-controller="Personeller" asp-action="AlintiVerileriSil">Alıntıları Sil</a>
+       @* <a class="btn btn-secondary btn-sm" asp-area="" asp-controller="Personeller" asp-action="Test">Test</a>*@
     </div>
 
     </div>
-    <div class="container md-2 mt-2">
+    
+    @if (User?.Identity?.IsAuthenticated ?? false)
+    {
+        <div class="d-inline-flex md-2 mt-2">
+            <a asp-action="Create" class="form-control btn btn-primary ">
+                <svg class="bi me-2 mx-auto mb-1" width="16" height="16"><use xlink:href="#create1" /></svg>
+                Yeni Akademisyen Ekle
+            </a>
+        </div>
+    }
+ 
+    <div class="row md-2 mt-2">
 <div class="table-responsive">
-    <table class="table table-bordered table-hover table-striped table-dashboard data-table" id="tblliste">
+    <table class="table table-sm table-bordered table-hover table-striped table-dashboard data-table" id="tblliste">
         <thead >
-           
-        <tr>
+                    
+                    <tr>
             <th>
                 @Html.Label("SıraNo")
             </th>
@@ -43,7 +56,10 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Alintilanma)
-            </th>
+                        </th>
+                       @* <th>
+                            @Html.DisplayNameFor(model => model.ApiKey)
+                        </th>*@
                 <th></th>
         </tr>
     </thead>
@@ -65,35 +81,65 @@
                 <td>
                     <a title="https://scholar.google.com/citations?hl=tr&view_op=search_authors&mauthors=@item.ScholarName" href="https://scholar.google.com/citations?hl=tr&user=@item.User" target="_blank">@Html.DisplayFor(modelItem => item.ScholarName)</a>
                 </td>
+
                  <td>
                     @Html.DisplayFor(modelItem => item.User)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Alintilanma)
-                </td>
+                            </td>
+                           @* <td>
+                              @if(item.ApiKey.Length>0)
+                                {
+                                    @Html.Label("Var")
+                                }else
+                                
+                                {
+                                    @Html.Label("Yok")
+                                }      
+                            </td>*@
             <td>
-                        <div class="btn-group btn-group-justified">
+                                <div class="btn-group btn-group-sm btn-block">
 
                                   
                                        @if (User?.Identity?.IsAuthenticated ?? false)
-                            {
-                                  <a asp-action="AGuncelle" asp-route-id="@item.Id" class="btn-sm btn-block">
-                                        <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#departman" /></svg>Alıntı Güncelle
-                                    </a>
-                               <a asp-action="Details" asp-route-id="@item.Id" class="btn-sm btn-block">
-                                <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#view1" /></svg>İncele
-                                        </a>
-                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn-sm btn btn-block">
-                                <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#edit1" /></svg>Düzenle
-                            </a>
-                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn-sm btn-block">
-                                <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#delete1" /></svg>Sil
-                            </a>
+                                    {
+                                        @if (item.Alintilanma > 0)
+                                        {
+                                        <div class="btn-sm">
+                                            <a asp-action="AlintiGuncelleYeniEski" asp-route-id="@item.Id" class="btn-sm btn btn-block">
+                                                <svg class="bi d-block mx-auto mb-0" width="16" height="16"><use xlink:href="#quote" /></svg>Update
+                                    </a></div>
+                                  
+                                        <div class="btn-sm">
+                                            <a asp-action="AlintiGuncelleApi" asp-route-id="@item.Id" class="btn-sm btn btn-block">
+                                                <svg class="bi d-block mx-auto mb-0" width="16" height="16"><use xlink:href="#quote" /></svg>UpdateApi
+                                            </a>
+                                        </div>
+                                        }
+                                           @* <div class="btn-sm">
+                                            <a asp-action="Details" asp-route-id="@item.Id" class="btn-sm btn btn-block">
+                                <svg class="bi d-block mx-auto mb-0" width="16" height="16"><use xlink:href="#view1" /></svg>İncele
+                                                </a>
+                                            </div>*@
+                                <div class="btn-sm" >
+                                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn-sm btn btn-block">
+                                <svg class="bi d-block mx-auto mb-0" width="16" height="16"><use xlink:href="#edit1" /></svg>Düzenle
+                                            </a>
+                                </div>
+                                         
+                                                    <div class="btn-sm">
+                                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn-sm btn btn-block">
+                                <svg class="bi d-block mx-auto mb-0" width="16" height="16"><use xlink:href="#delete1" /></svg>Sil
+                                                </a>
+                                            </div>
                                     }else
                                     {
-                                           <a asp-action="Details" asp-route-id="@item.Id" class="btn-sm btn-block">
-                                <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#view1" /></svg>İncele
-                                        </a>
+                                                  @*      <div class="btn-sm">
+                                            <a asp-action="Details" asp-route-id="@item.Id" class="btn-sm btn btn-block">
+                                <svg class="bi d-block mx-auto mb-0" width="16" height="16"><use xlink:href="#view1" /></svg>İncele
+                                                </a>
+                                            </div>*@
                                     }
                                     
 
@@ -105,12 +151,12 @@
 </table>
 </div>
     </div>
+    
 </div>
 
-<script>
+<script type="text/javascript" >
     $(document).ready(function () {
         $('#tblliste').DataTable();
     });
-
 </script>
 

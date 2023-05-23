@@ -27,12 +27,19 @@ namespace TaramaMVC.Controllers
         {
             return View();
         }
+
+        public IActionResult Test()
+        {
+
+            return View();
+        }
         public IActionResult Raporlar()
         {
             return View();
         }
         //[ResponseCache(Duration = 20, Location = ResponseCacheLocation.None, NoStore = true)] 
         [HttpGet]
+        [ResponseCache(VaryByHeader = "User-Agent", Duration = 30)]
         public async Task<JsonResult>  HepsiniGetir()
         {
             var users = await( from k in  _context.PersonelYayinBilgileris join 
@@ -43,6 +50,7 @@ namespace TaramaMVC.Controllers
             return Json(users);
         }
         [HttpGet]
+        [ResponseCache(VaryByHeader = "User-Agent", Duration = 30)] // 30 dk boyunca cache den oku
         public async Task<JsonResult> ChartHepsiniGetir()
         {
             var academicData = await (from k in _context.PersonelYayinBilgileris
