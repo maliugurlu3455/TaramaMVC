@@ -59,6 +59,7 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.UseResponseCaching();
 
+
 app.Run();
 //app.UseAuthorization();
 

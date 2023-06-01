@@ -1,24 +1,13 @@
 ﻿using HtmlAgilityPack;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.CodeAnalysis.Completion;
-using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using NuGet.Configuration;
-using NuGet.Protocol;
-//using OpenQA.Selenium.DevTools.V109.Network;
-//using OpenQA.Selenium;
-//using OpenQA.Selenium.Chrome;
 using SerpApi;
 using System.Collections;
 using System.Diagnostics;
-using System.Globalization;
 using System.Text;
-using System.Text.Json;
-using System.Text.Json.Nodes;
 using TaramaMVC.Helper;
 using TaramaMVC.Models;
 
@@ -30,19 +19,19 @@ namespace TaramaMVC.Controllers
         private readonly DatabaseContext _context;
         private readonly IConfiguration _configuration;
         //private static IWebDriver _driver=null;
-        public PersonellerController(DatabaseContext context, IConfiguration configuration )
+        public PersonellerController(DatabaseContext context, IConfiguration configuration)
         {
             _context = context;
             _configuration = configuration;
-            
+
         }
 
         // GET: Personeller
         ////[Authorize]
         public async Task<IActionResult> Index()
         {
-            var databaseContext = _context.Personels.OrderByDescending(t=>t.Alintilanma).Include(p => p.AnaBilimDallari);
-            
+            var databaseContext = _context.Personels.OrderByDescending(t => t.Alintilanma).Include(p => p.AnaBilimDallari);
+
             return View(await databaseContext.ToListAsync());
         }
 
@@ -66,7 +55,7 @@ namespace TaramaMVC.Controllers
             return View(personel);
         }
 
-     
+
 
 
         // GET: Personeller/Create
@@ -95,11 +84,11 @@ namespace TaramaMVC.Controllers
 
                 personel.User = "yok";
             }
-           
+
             if (ModelState.IsValid)
             {
                 //personel.Name = personel.Name;
-                
+
                 _context.Add(personel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -145,7 +134,7 @@ namespace TaramaMVC.Controllers
                 var anabilims = await _context.AnaBilimDals.FindAsync(personel.AnaBilimDallariId);
                 personel.AnaBilimDallari = anabilims;
             }
-           
+
             if (ModelState.IsValid)
             {
                 try
@@ -165,7 +154,7 @@ namespace TaramaMVC.Controllers
                         throw;
                     }
                 }
-               
+
             }
             ViewData["AnaBilimDallariId"] = new SelectList(_context.AnaBilimDals, "Id", "Name", personel.AnaBilimDallariId);
             return View(personel);
@@ -173,20 +162,21 @@ namespace TaramaMVC.Controllers
 
         //alıntı güncelle
         ////[Authorize]
-        public async Task<IActionResult> AGuncelle(int? id) {
-     
+        public async Task<IActionResult> AGuncelle(int? id)
+        {
+
 
             YayinAlintiBilgisi yAB = null;
             /**/
             HtmlDocument doc = null;
             /**/
-            var Pyb = await _context.PersonelYayinBilgileris.Where(r => r.Alinti > 0 && r.PersonelId==id).ToListAsync();
+            var Pyb = await _context.PersonelYayinBilgileris.Where(r => r.Alinti > 0 && r.PersonelId == id).ToListAsync();
             if (Pyb != null && Pyb.Count > 0)
             {
                 foreach (var pyb in Pyb)
                 {
                     //Alinti Getir
-                   
+
                     HtmlWeb web = new HtmlWeb();
                     web.UseCookies = true;
                     web.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36";
@@ -195,9 +185,9 @@ namespace TaramaMVC.Controllers
                     //TaramaMVC.Helper.Helperim.GetPage(pyb.BaslikCites);
                     doc = TaramaMVC.Helper.Helperim.GetPage(pyb.BaslikCites);
                     List<YayinAlintiBilgisi> liste = new List<YayinAlintiBilgisi>();
-            
-                 
-                   // var liste = Helperim.AlintiGetir(pyb.BaslikCites);//, ylo,yhi);
+
+
+                    // var liste = Helperim.AlintiGetir(pyb.BaslikCites);//, ylo,yhi);
                     if (liste != null && liste.Count > 0)
                     {
                         foreach (var item in liste)
@@ -214,7 +204,7 @@ namespace TaramaMVC.Controllers
                     {
                         // return Content(doc.Text, System.Net.Mime.MediaTypeNames.Text.Html, Encoding.GetEncoding("iso-8859-9"));
                     }
-                   
+
                 }
                 return Content(doc.Text, System.Net.Mime.MediaTypeNames.Text.Html, Encoding.GetEncoding("iso-8859-9"));
 
@@ -238,7 +228,7 @@ namespace TaramaMVC.Controllers
             {
                 return NotFound();
             }
-           // ViewData["AnaBilimDallariId"] = new SelectList(_context.AnaBilimDals, "Id", "Name", personel.AnaBilimDallariId);
+            // ViewData["AnaBilimDallariId"] = new SelectList(_context.AnaBilimDals, "Id", "Name", personel.AnaBilimDallariId);
             return View(personel);
         }
 
@@ -257,14 +247,14 @@ namespace TaramaMVC.Controllers
             {
                 _context.Personels.Remove(personel);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool PersonelExists(int id)
         {
-          return _context.Personels.Any(e => e.Id == id);
+            return _context.Personels.Any(e => e.Id == id);
         }
         ////[Authorize] AlintiVerileriSil
         public async Task<IActionResult> AlintiVerileriSil()
@@ -272,12 +262,12 @@ namespace TaramaMVC.Controllers
             string mesaj = "";
             try
             {
-            
+
                 var silinecekler2 = await _context.YayinAlintiBilgisis.ToListAsync();
 
                 _context.YayinAlintiBilgisis.RemoveRange(silinecekler2);
 
-               await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
                 MessageModel mm = new MessageModel();
                 mm.Durum = true;
                 mm.Baslik = "Alıntı Verileri Silme İşlemi";
@@ -299,12 +289,12 @@ namespace TaramaMVC.Controllers
             {
                 var silinecekler = await _context.PersonelYayinBilgileris.ToListAsync();
                 _context.PersonelYayinBilgileris.RemoveRange(silinecekler);
-                var  silinecekler2 = await _context.YayinAlintiBilgisis.ToListAsync();
+                var silinecekler2 = await _context.YayinAlintiBilgisis.ToListAsync();
 
                 _context.YayinAlintiBilgisis.RemoveRange(silinecekler2);
 
-                _context.Personels.ExecuteUpdate(p => p.SetProperty(x => x.Alintilanma, x =>0 ));
-                 
+                _context.Personels.ExecuteUpdate(p => p.SetProperty(x => x.Alintilanma, x => 0));
+
                 await _context.SaveChangesAsync();
                 MessageModel mm = new MessageModel();
                 mm.Durum = true;
@@ -315,23 +305,23 @@ namespace TaramaMVC.Controllers
             catch (Exception ex)
             {
 
-                mesaj = "Hata : "+ ex.Message;
+                mesaj = "Hata : " + ex.Message;
                 return Content(mesaj, System.Net.Mime.MediaTypeNames.Text.Html);
             }
-            
-            
+
+
         }
-            public async Task<IActionResult> VeriGuncelle()
+        public async Task<IActionResult> VeriGuncelle()
         {
             List<PersonelYayinBilgileri> UserList = new List<PersonelYayinBilgileri>();
             //var databaseContext = _context.Personels.Where(r=>r.Name.Contains("slam")).ToList();
             var databaseContext = _context.Personels.ToList();
             foreach (var item in databaseContext)
             {
-               //web servisten kullanıcı bilgilerini al
+                //web servisten kullanıcı bilgilerini al
                 UserList = Helperim.KullaniciBilgileri(item.User);
                 var person = await _context.Personels.FirstOrDefaultAsync(i => i.Id == item.Id);
-                if (UserList!=null && UserList.Count>0)
+                if (UserList != null && UserList.Count > 0)
                 {
                     foreach (PersonelYayinBilgileri py in UserList)
                     {
@@ -345,19 +335,19 @@ namespace TaramaMVC.Controllers
                     }
                     await _context.SaveChangesAsync();
                 }
-             
-               
-            }          
-           
+
+
+            }
+
             return RedirectToAction("Index");
         }
         /*
          AlintiGuncelleApi
          */
- 
+
         public async Task<IActionResult> AlintiGuncelleApi(int id)
         {
-          
+
             #region CiteID
             YayinAlintiBilgisi yAB = null;
             string apikey = "";
@@ -367,10 +357,10 @@ namespace TaramaMVC.Controllers
                 foreach (var pyb in Pyb)
                 {
                     string key = GetApiKeyString();
-                    
+
                     if (key != "")
                     {
-                      
+
                         Hashtable ht = new Hashtable();
                         var degerler = _context.Parametrelers.Where(r => r.GrupId == 1);
                         if (degerler != null)
@@ -421,7 +411,7 @@ namespace TaramaMVC.Controllers
                                                     #region Detay
                                                     key = GetApiKeyString();
                                                     detay = GetSearchResultDeatailCitedID(key, yab.SID);
-                                                    
+
                                                     if (detay != null)
                                                     {
                                                         if (detay.search_metadata.status == "Success")
@@ -476,7 +466,7 @@ namespace TaramaMVC.Controllers
 
                                     Trace.WriteLine("hata Alıntı : " + ex.Message);
                                 }
-                              
+
                             }
 
 
@@ -484,14 +474,14 @@ namespace TaramaMVC.Controllers
                         }
                         catch (Exception ex)
                         {
-                            Trace.WriteLine("hata genel : "+ex.Message);
-                           
+                            Trace.WriteLine("hata genel : " + ex.Message);
+
                         }
                     }
 
                 }
 
-            } 
+            }
             #endregion
             return RedirectToAction("Index");
         }
@@ -501,17 +491,17 @@ namespace TaramaMVC.Controllers
             SearchResultDetail res = null;
             String apiKey = ApiKey;//"1f9146a88abddffbb064fbc4e60a22b0f85f0e59068b5e4275b4e454c598c333";
             Hashtable ht = new Hashtable();
-            var degerler= _context.Parametrelers.Where(r => r.GrupId == 2);
-            if (degerler!=null )
+            var degerler = _context.Parametrelers.Where(r => r.GrupId == 2);
+            if (degerler != null)
             {
                 foreach (var item in degerler)
                 {
-                   ht.Add(item.Name, item.Value);
+                    ht.Add(item.Name, item.Value);
                 }
             }
             //ht.Add("engine", "google_scholar_cite");
             ht.Add("q", CiteID);// "LSsXyncAAAAJ");
-          
+
             try
             {
                 GoogleSearch search = new GoogleSearch(ht, apiKey);
@@ -531,13 +521,13 @@ namespace TaramaMVC.Controllers
         [HttpGet]
         public async Task<IActionResult> YayinAlinti()
         {
-          
 
-                string url = "https://scholar.google.com/scholar?oi=bibs&hl=tr&cites=4986682506114850678";
-                            //https://scholar.google.com/scholar?oi=bibs&hl=tr&cites=1186450095630501573
+
+            string url = "https://scholar.google.com/scholar?oi=bibs&hl=tr&cites=4986682506114850678";
+            //https://scholar.google.com/scholar?oi=bibs&hl=tr&cites=1186450095630501573
             System.Threading.Thread.Sleep(Random.Shared.Next(10000, 11000));
-                HtmlWeb web = new HtmlWeb();
-                //web.UseCookies = true;
+            HtmlWeb web = new HtmlWeb();
+            //web.UseCookies = true;
             HtmlDocument doc = null;
 
             //web.PreRequest = delegate (HttpWebRequest webRequest)
@@ -550,15 +540,15 @@ namespace TaramaMVC.Controllers
             //    return true;
             //};
             web.UseCookies = true;
-            web.UserAgent= "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36";
-           
+            web.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36";
+
 
             //doc = web.Load(url,"GET");
             doc = TaramaMVC.Helper.Helperim.GetPage(url);
             return Content(doc.Text, System.Net.Mime.MediaTypeNames.Text.Html, Encoding.GetEncoding("iso-8859-9"));
-            }
-            /*yayın guncelle*/
-                    public async Task<IActionResult> YayinAlintiGuncelle()
+        }
+        /*yayın guncelle*/
+        public async Task<IActionResult> YayinAlintiGuncelle()
         {
             YayinAlintiBilgisi yAB = null;
             var Pyb = await _context.PersonelYayinBilgileris.Where(r => r.Alinti > 0).ToListAsync();
@@ -567,8 +557,8 @@ namespace TaramaMVC.Controllers
                 foreach (var pyb in Pyb)
                 {
                     //
-                   // string ylo = ConfigurationManager.AppSetting["ylo"];
-                   // string yhi = ConfigurationManager.AppSetting["yhi"];
+                    // string ylo = ConfigurationManager.AppSetting["ylo"];
+                    // string yhi = ConfigurationManager.AppSetting["yhi"];
                     var liste = Helperim.AlintiGetir(pyb.BaslikCites);//,ylo,yhi);
                     if (liste != null && liste.Count > 0)
                     {
@@ -585,7 +575,7 @@ namespace TaramaMVC.Controllers
                     }
                     else
                     {
-                     // return Content(doc.Text, System.Net.Mime.MediaTypeNames.Text.Html, Encoding.GetEncoding("iso-8859-9"));
+                        // return Content(doc.Text, System.Net.Mime.MediaTypeNames.Text.Html, Encoding.GetEncoding("iso-8859-9"));
                     }
 
                 }
@@ -593,7 +583,7 @@ namespace TaramaMVC.Controllers
             }
             return RedirectToAction("Index");
         }
-       
+
         public IActionResult Getir()
         {
             //string UserId = "";VeriGuncelle
@@ -602,16 +592,16 @@ namespace TaramaMVC.Controllers
             foreach (var item in databaseContext)
             {
                 //UserId = Helperim.GetUserId(item.ScholarName);
-                UserId = Helperim.GetUserId(item.User,true);
+                UserId = Helperim.GetUserId(item.User, true);
                 var person = _context.Personels.FirstOrDefault(i => i.Id == item.Id);
                 person.User = UserId[0];
-                person.Alintilanma=Convert.ToInt32(!string.IsNullOrEmpty(UserId[1])? UserId[1]:0);
+                person.Alintilanma = Convert.ToInt32(!string.IsNullOrEmpty(UserId[1]) ? UserId[1] : 0);
                 _context.Update(person);
                 _context.SaveChanges();
             }
 
             return RedirectToAction("Index");
-           
+
 
         }
         //public async Task<IActionResult> AlintiGuncelleYeni(int? id)
@@ -671,7 +661,7 @@ namespace TaramaMVC.Controllers
         //                {
         //                    url = pyb.BaslikCites + "&start=" + t.ToString() + "&as_sdt=2005&sciodt=0,5&scipsc=";
         //                }
-                      
+
         //                _driver.Navigate().GoToUrl(url);
 
         //                doc = new HtmlDocument();
@@ -680,7 +670,7 @@ namespace TaramaMVC.Controllers
         //                var nods = doc.DocumentNode.SelectNodes("//div[@class = 'gs_r gs_or gs_scl']");
         //            if (nods != null && nods.Count > 0)
         //            { 
-                       
+
         //                for (int i = 0; i < nods.Count; i++)
         //                {
         //                    yab = new YayinAlintiBilgisi();
@@ -702,7 +692,7 @@ namespace TaramaMVC.Controllers
         //                            {
         //                                sId = nods[i].SelectNodes("//div[@class='gs_r gs_or gs_scl']")[i].GetAttributeValue("data-cid", "");//id
         //                            }
-                                   
+
         //                        }
         //                        catch (Exception ex)
         //                        {
@@ -720,7 +710,7 @@ namespace TaramaMVC.Controllers
         //                                gs_rs = nods[i].SelectNodes("//div[@class='gs_rs']")[i].InnerText;// snippet
         //                            }
 
-                                   
+
         //                        }
         //                        catch (Exception ex)
         //                        {
@@ -737,7 +727,7 @@ namespace TaramaMVC.Controllers
         //                            {
         //                                gs_a = nods[i].SelectNodes("//div[@class='gs_a']")[i].InnerText;//publication info
         //                            }
-                                   
+
         //                        }
         //                        catch (Exception ex)
         //                        {
@@ -754,7 +744,7 @@ namespace TaramaMVC.Controllers
         //                            {
         //                                gs_ri = nods[i].SelectNodes("//div[@class='gs_ri']")[i].InnerText;//tamamı
         //                            }
-                                   
+
         //                        }
         //                        catch (Exception ex)
         //                        {
@@ -771,7 +761,7 @@ namespace TaramaMVC.Controllers
         //                            {
         //                                gs_ri1 = nods[i].SelectNodes("//div[@class='gs_ri']//h3[@class='gs_rt']")[i].InnerText;//title
         //                            }
-                                    
+
         //                        }
         //                        catch (Exception ex)
         //                        {
@@ -788,7 +778,7 @@ namespace TaramaMVC.Controllers
         //                            {
         //                                gs_ri2 = nods[i].SelectNodes("//div[@class='gs_ri']//h3[@class='gs_rt']//a")[i].GetAttributeValue("href", "");//link
         //                            }
-                                    
+
         //                        }
         //                        catch (Exception ex)
         //                        {
@@ -805,14 +795,14 @@ namespace TaramaMVC.Controllers
         //                            {
         //                                gs_ri3 = nods[i].SelectNodes("//div[@class='gs_ri']//h3[@class='gs_rt']//a")[i].InnerText;//link text
         //                            }
-                                  
+
         //                        }
         //                        catch (Exception ex)
         //                        {
         //                            gs_ri3 = "";
 
         //                        }
-                               
+
         //                    yab.Title = gs_ri1;
         //                    yab.Link = gs_ri2;
         //                    yab.SID = sId;
@@ -826,32 +816,32 @@ namespace TaramaMVC.Controllers
         //                    await _context.YayinAlintiBilgisis.AddAsync(yab);
         //                        await _context.SaveChangesAsync();
         //                    }
-                        
+
         //            }
 
         //            }
         //        }
-               
+
         //        // return Content(doc.Text, System.Net.Mime.MediaTypeNames.Text.Html, Encoding.GetEncoding("iso-8859-9"));
 
         //    }
         //    return RedirectToAction(nameof(Index));
         //}
-       //public static string GetUserAgent()
-       // {
-       //     // HttpContextAccessor kullanarak HttpContext.Current.Request.UserAgent gibi bir erişim sağlayabilirsiniz
-       //     string userAgent = HttpContextAccessor.HttpContext.Request.Headers["User-Agent"].ToString();
+        //public static string GetUserAgent()
+        // {
+        //     // HttpContextAccessor kullanarak HttpContext.Current.Request.UserAgent gibi bir erişim sağlayabilirsiniz
+        //     string userAgent = HttpContextAccessor.HttpContext.Request.Headers["User-Agent"].ToString();
 
-       //     return userAgent;
-       // }
+        //     return userAgent;
+        // }
 
-       // public static string GetAcceptHeader()
-       // {
-       //     // HttpContextAccessor kullanarak HttpContext.Current.Request.Headers["Accept"] gibi bir erişim sağlayabilirsiniz
-       //     string acceptHeader =string.IsNullOrEmpty(HttpContextAccessor.HttpContext.Request.Headers["Accept"].ToString())?"": HttpContextAccessor.HttpContext.Request.Headers["Accept"].ToString();
+        // public static string GetAcceptHeader()
+        // {
+        //     // HttpContextAccessor kullanarak HttpContext.Current.Request.Headers["Accept"] gibi bir erişim sağlayabilirsiniz
+        //     string acceptHeader =string.IsNullOrEmpty(HttpContextAccessor.HttpContext.Request.Headers["Accept"].ToString())?"": HttpContextAccessor.HttpContext.Request.Headers["Accept"].ToString();
 
-       //     return acceptHeader;
-       // }
+        //     return acceptHeader;
+        // }
         public async Task<IActionResult> AlintiGuncelleYeniEski(int? id)
         {
 
@@ -870,20 +860,20 @@ namespace TaramaMVC.Controllers
                     //https://scholar.google.com/scholar?as_ylo=2019&hl=tr&as_sdt=2005&sciodt=0,5&cites=1231811585781593305&scipsc=
                     //link
                     //https://scholar.google.com/scholar?hl=tr&as_sdt=2005&sciodt=0%2C5&cites=4986682506114850678&scipsc=&as_ylo=2019&as_yhi=2023
-                    for (int t = 2022; t <DateTime.Now.Year+1
+                    for (int t = 2022; t < DateTime.Now.Year + 1
                         ; t++)
                     {
 
-                        System.Threading.Thread.Sleep(Random.Shared.Next(30001+t));
+                        System.Threading.Thread.Sleep(Random.Shared.Next(30001 + t));
                         //doc = await TaramaMVC.Helper.Helperim.GetPageYeni(pyb.BaslikCites + "&as_ylo=2022&start=" + t.ToString());
                         urll = TaramaMVC.Helper.Helperim.UrltoCites(pyb.BaslikCites);
-                        url = string.Format("https://scholar.google.com/scholar?hl=tr&as_sdt=2005&sciodt=0%2C5&cites={0}&scipsc=&as_ylo={1}&as_yhi={2}", urll,t,t+1);
+                        url = string.Format("https://scholar.google.com/scholar?hl=tr&as_sdt=2005&sciodt=0%2C5&cites={0}&scipsc=&as_ylo={1}&as_yhi={2}", urll, t, t + 1);
                         //url = string.Format("https://scholar.google.com/scholar?as_ylo={1}&hl=tr&as_sdt=2005&sciodt=0,5&cites={0}&scipsc=", urll, t);
                         doc = TaramaMVC.Helper.Helperim.GetPage(url);
-                        
+
 
                         var nods = doc.DocumentNode.SelectNodes("//div[@class = 'gs_r gs_or gs_scl']");
-                      
+
                         if (nods != null && nods.Count > 0)
                         {
 
@@ -996,9 +986,9 @@ namespace TaramaMVC.Controllers
                 var deger = _context.ApiKey.FirstOrDefault(r => r.IsTamam == false && r.Sayi < 100);
                 if (deger != null && deger.Key != "" && deger.Key != null && deger.Sayi < 100)
                 {
-        
+
                     apiKey = deger.Key;
-                   
+
 
                 }
             }
@@ -1012,7 +1002,7 @@ namespace TaramaMVC.Controllers
         }
         public ApiKeys GetApiKey()
         {
-            ApiKeys apiKey =null;
+            ApiKeys apiKey = null;
             try
             {
                 var deger = _context.ApiKey.FirstOrDefault(r => r.IsTamam == false && r.Sayi < 100);
@@ -1020,10 +1010,10 @@ namespace TaramaMVC.Controllers
                 {
                     apiKey = new ApiKeys();
                     apiKey.Key = deger.Key;
-                    apiKey.Id= deger.Id;
-                    apiKey.Sayi= deger.Sayi;
-                    apiKey.IsTamam= deger.IsTamam;
-                  
+                    apiKey.Id = deger.Id;
+                    apiKey.Sayi = deger.Sayi;
+                    apiKey.IsTamam = deger.IsTamam;
+
                 }
             }
             catch (Exception ex)
@@ -1041,10 +1031,10 @@ namespace TaramaMVC.Controllers
 
             try
             {
-                var deger = _context.ApiKey.SingleOrDefault(r => r.Key== apiKey);
-                if (deger != null && deger.Key != "" && deger.Key != null )
+                var deger = _context.ApiKey.SingleOrDefault(r => r.Key == apiKey);
+                if (deger != null && deger.Key != "" && deger.Key != null)
                 {
-                    if (deger.Sayi==99)
+                    if (deger.Sayi == 99)
                     {
                         deger.Sayi++;
                         deger.IsTamam = true;
@@ -1059,7 +1049,7 @@ namespace TaramaMVC.Controllers
                         _context.SaveChanges();
                         sonuc = true;
                     }
-                   
+
                 }
                 else
                 {
