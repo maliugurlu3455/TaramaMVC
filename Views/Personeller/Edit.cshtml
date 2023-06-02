@@ -41,16 +41,17 @@
                         Kaydet
                     </button>
                 </div>
-                <div class="Row md-2 mt-2">
-                    <a asp-action="Index" class="form-control btn btn-secondary md-2 mt-2">
-                        <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#back1" /></svg>
-                        Geri
-                    </a>
-                </div>
+             
         </form>
+            <div class="Row md-2 mt-2">
+                <a asp-action="Index" class="form-control btn btn-secondary md-2 mt-2">
+                    <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#back1" /></svg>
+                    Geri
+                </a>
+            </div>
     </div>
 </div>
-
+</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

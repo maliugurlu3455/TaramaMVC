@@ -1,0 +1,107 @@
+﻿<div class="container-fluid">
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3  ml-auto">
+        @* <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-1 ml-auto ">*@
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="~/css/resimler/site-logo-outlined.png" alt="" height="80">
+            </a>
+            <button type="button" class="navbar-toggler ml-auto" data-bs-toggle="collapse" role="button" data-bs-target="#collapsibleNavbar">
+                @* <button type="button" class="navbar-toggler" data-bs-toggle="collapse" role="button" data-bs-target="#collapsibleNavbar">*@
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end ml-auto" Id="collapsibleNavbar">
+                @*<div class="collapse navbar-collapse justify-content-end ml-auto" Id="collapsibleNavbar">*@
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index" data-bs-clipboard-text="atom">
+                            <svg class="bi me-2 mx-auto mb-1" width="24" height="24"><use xlink:href="#home" /></svg>
+                            Ana Sayfa
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="PersonelYayinBilgileri" asp-action="Index">
+                            <svg class="bi me-2 mx-auto mb-1" width="24" height="24"><use xlink:href="#newspaper" /></svg>
+                            Yayın Bilgileri
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="YayinAlintiBilgisi" asp-action="Index">
+                            <svg class="bi me-2 mx-auto mb-1" width="24" height="24"><use xlink:href="#card-checklist" /></svg>
+                            Alıntı Bilgileri
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Raporlar">
+                            <svg class="bi me-2 mx-auto mb-1" width="24" height="24"><use xlink:href="#rapor" /></svg>
+                            Raporlar
+                        </a>
+                    </li>
+
+                    @if (User?.Identity?.IsAuthenticated ?? false)
+                    {
+                        <li class="nav-item dropdown">
+
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Yönetim
+                            </a>
+
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" asp-area="" asp-controller="Kadromuz" asp-action="Index">
+                                    <svg class="bi me-2 mx-auto mb-1" width="24" height="24"><use xlink:href="#departman" /></svg>
+                                    Ana Bilim Dalları
+                                </a>
+
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" asp-area="" asp-controller="Personeller" asp-action="Index">
+                                    <svg class="bi me-2 mx-auto mb-1" width="24" height="24"><use xlink:href="#person" /></svg>
+                                    Akademisyenler
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" asp-area="" asp-controller="Yonetim" asp-action="Index">
+                                    <svg class="bi me-2 mx-auto mb-1" width="24" height="24"><use xlink:href="#card-checklist" /></svg>
+                                    Kullanıcılar
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" asp-area="" asp-controller="Role" asp-action="Index">
+                                    <svg class="bi me-2 mx-auto mb-1" width="24" height="24"><use xlink:href="#card-checklist" /></svg>
+                                    Roller
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" asp-area="" asp-controller="ApiKey" asp-action="Index">
+                                    <svg class="bi me-2 mx-auto mb-1" width="24" height="24"><use xlink:href="#card-checklist" /></svg>
+                                    Serp Api Key
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" asp-area="" asp-controller="Param" asp-action="Index">
+                                    <svg class="bi me-2 mx-auto mb-1" width="24" height="24"><use xlink:href="#speedometer2" /></svg>
+                                    Parametreler
+                                </a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Logout">
+                                <svg class="bi me-2 mx-auto mb-1" width="24" height="24"><use xlink:href="#logout" /></svg>
+                                Logout
+                            </a>
+                        </li>
+
+
+                    }
+                    else
+                    {
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Login">
+                                <svg class="bi me-2 mx-auto mb-1" width="24" height="24"><use xlink:href="#login" /></svg>
+                                Login
+                            </a>
+                        </li>
+
+                    }
+
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+</div>

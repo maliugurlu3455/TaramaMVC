@@ -6,8 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <OutputType>Exe</OutputType>
     <Nullable>enable</Nullable>
-    <AssemblyVersion>1.0.0.1</AssemblyVersion>
-    <FileVersion>1.0.0.1</FileVersion>
+    <AssemblyVersion>1.0.0.2</AssemblyVersion>
+    <FileVersion>1.0.0.2</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -71,6 +71,7 @@
     <None Include="Views\Yonetim\Delete.cshtml" />
     <None Include="Views\Yonetim\Edit.cshtml" />
     <None Include="Views\Yonetim\Index.cshtml" />
+    <None Include="wwwroot\js\dt_js\jquery-3.5.1.js" />
   </ItemGroup>
 
 </Project>

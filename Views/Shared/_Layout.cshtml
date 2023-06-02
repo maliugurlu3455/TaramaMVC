@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,8 +12,7 @@
 
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TaramaMVC.styles.css" asp-append-version="true" />
-  @*  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.5/css/buttons.dataTables.min.css" />
-*@
+
     <script src="~/js/jquery/jquery.min.js"></script>
 
     
@@ -22,21 +21,18 @@
 
    <script src="~/js/bootstrap/js/bootstrap.min.js"></script>
     <script src="~/js/bootstrap/js/bootstrap.bundle.min.js"></script>
-  @*  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>*@
+     
     <script src="~/js/chart.bundle.min.js"></script>
     <script src="~/js/pivottable/pivot.min.js"></script>
    
-   
- 
-    @*<script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>*@
 <script src="~/js/jquery.datatables.min.js"></script>
     <script src="~/js/datatables.net-bs5/datatables.bootstrap5.min.js"></script>
-
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.bootstrap5.min.js"></script>
 
 </head>
 <body>
-
-    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    @await Html.PartialAsync("BodySVG")
+  @*  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
         <symbol id="bootstrap" viewBox="0 0 118 94">
             <title>Bootstrap</title>
             <path fill-rule="evenodd" clip-rule="evenodd" d="M24.509 0c-6.733 0-11.715 5.893-11.492 12.284.214 6.14-.064 14.092-2.066 20.577C8.943 39.365 5.547 43.485 0 44.014v5.972c5.547.529 8.943 4.649 10.951 11.153 2.002 6.485 2.28 14.437 2.066 20.577C12.794 88.106 17.776 94 24.51 94H93.5c6.733 0 11.714-5.893 11.491-12.284-.214-6.14.064-14.092 2.066-20.577 2.009-6.504 5.396-10.624 10.943-11.153v-5.972c-5.547-.529-8.934-4.649-10.943-11.153-2.002-6.484-2.28-14.437-2.066-20.577C105.214 5.894 100.233 0 93.5 0H24.508zM80 57.863C80 66.663 73.436 72 62.543 72H44a2 2 0 01-2-2V24a2 2 0 012-2h18.437c9.083 0 15.044 4.92 15.044 12.474 0 5.302-4.01 10.049-9.119 10.88v.277C75.317 46.394 80 51.21 80 57.863zM60.521 28.34H49.948v14.934h8.905c6.884 0 10.68-2.772 10.68-7.727 0-4.643-3.264-7.207-9.012-7.207zM49.948 49.2v16.458H60.91c7.167 0 10.964-2.876 10.964-8.281 0-5.406-3.903-8.178-11.425-8.178H49.948z"></path>
@@ -152,22 +148,27 @@
         <symbol id="quote" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-quote" viewBox="0 0 16 16">
             <path d="M12 12a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1h-1.388c0-.351.021-.703.062-1.054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 0 0-1.085.992 4.92 4.92 0 0 0-.62 1.458A7.712 7.712 0 0 0 9 7.558V11a1 1 0 0 0 1 1h2Zm-6 0a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1H4.612c0-.351.021-.703.062-1.054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 0 0-1.085.992 4.92 4.92 0 0 0-.62 1.458A7.712 7.712 0 0 0 3 7.558V11a1 1 0 0 0 1 1h2Z" />
         </symbol>
+        <symbol id="person-circle" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+        </symbol>
     </svg>
-
+*@
     <header>
-        <div class="container-fluid">
+        @await Html.PartialAsync("Navbar")
+       @* <div class="container-fluid">
        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3  ml-auto">
-           @* <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-1 ml-auto ">*@
+           
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">
       <img src="~/css/resimler/site-logo-outlined.png" alt=""  height="80">
     </a>
                     <button type="button" class="navbar-toggler ml-auto" data-bs-toggle="collapse" role="button" data-bs-target="#collapsibleNavbar">
-                       @* <button type="button" class="navbar-toggler" data-bs-toggle="collapse" role="button" data-bs-target="#collapsibleNavbar">*@
+                      
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-end ml-auto" Id="collapsibleNavbar">
-                    @*<div class="collapse navbar-collapse justify-content-end ml-auto" Id="collapsibleNavbar">*@
+                    
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index" data-bs-clipboard-text="atom">
@@ -261,7 +262,7 @@
                 </div>
             </div>
         </nav>
-        </div>
+        </div>*@
        
     </header>
     <div class="container-lg">

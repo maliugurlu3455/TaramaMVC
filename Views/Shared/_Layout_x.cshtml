@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Projemiz</title>
+
+    <link href="~/css/dt_css/bootstrap.min.css" rel="stylesheet" />
+     <link href="~/css/dt_css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+    <link href="~/css/dt_css/buttons.bootstrap5.min.css" rel="stylesheet" />
+
+    <script src="~/js/dt_js/jquery-3.5.1.js"></script>
+    <script src="~/js/dt_js/jquery.datatables.min.js"></script>
+    <script src="~/js/dt_js/datatables.bootstrap5.min.js"></script>
+    <script src="~/js/dt_js/datatables.buttons.min.js"></script>
+    <script src="~/js/dt_js/buttons.bootstrap5.min.js"></script>
+    <script src="~/js/dt_js/jszip.min.js"></script>
+    <script src="~/js/dt_js/pdfmake.min.js"></script>
+    <script src="~/js/dt_js/vfs_fonts.js"></script>
+    <script src="~/js/dt_js/buttons.html5.min.js"></script>
+    <script src="~/js/dt_js/buttons.print.min.js"></script>
+    <script src="~/js/dt_js/buttons.colvis.min.js"></script>
+
+</head>
+
+<body>
+    @await Html.PartialAsync("BodySVG")
+
+    <header>
+        @await Html.PartialAsync("Navbar")
+
+       
+    </header>
+    <div class="container-sm">
+        <main role="main" class="pb-1">
+            @RenderBody()
+        </main>
+    </div>
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            2023 - Projemiz
+        </div>
+    </footer>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

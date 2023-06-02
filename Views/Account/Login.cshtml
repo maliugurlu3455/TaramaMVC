@@ -1,27 +1,52 @@
 ﻿@model Login
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "KULLANICI GİRİŞ EKRANI";
 }
-<div class="container">
-    <div class="row">
-<h1 class="bg-info text-white">Login</h1>
+<div class="container-lg">
+    <div class="form-group">
+      
+        <h3 class="bg-info text-light h-25">
+            <span class="mx-3">
+                <svg class="bi" width="16" height="16"><use xlink:href="#person-circle" /></svg>   Kullanıcı Giriş Ekranı
+            </span>
+        </h3>
+      
 <div class="text-danger" asp-validation-summary="All"></div>
     </div>
-    <div class="row">
+   
 <form method="post">
-    
+        <div class="row">
     <div class="form-group">
         <label asp-for="Email"></label>
-        <input asp-for="Email" class="form-control" />
+                <input asp-for="Email" class="form-control" placeholder="Email" />
     </div>
+        </div>
+        <div class="row">
     <div class="form-group">
         <label asp-for="Password"></label>
-        <input asp-for="Password" type="password" class="form-control" />
+                <input asp-for="Password" type="password" class="form-control" placeholder="Password" />
     </div>
-    <div class="form-group">
-        Beni Hatırla? <input type="checkbox" asp-for="Remember" />
-    </div>
-    <button class="btn btn-primary" type="submit">Giriş</button>
+        </div>
+        <div class="row">
+            <div class="col-3">
+                <label class="form-check-label md-2 mt-2" for="flexSwitchCheckDefault">Beni Hatırla?</label>
+            </div>
+                <div class="col">
+                <div class="form-check form-switch md-2 mt-2">
+                    <input class="form-check-input w-25" type="checkbox" role="switch" id="flexSwitchCheckDefault" asp-for="Remember">
+                </div>
+            </div>
+        </div>
+
+ 
+        <div class="row">
+            <div class="col form-group md-2 mt-2">
+                @* <input type="submit" value="Create" class="btn btn-secondary" />*@
+                <button type="submit" class="form-control btn btn-primary">
+                    <svg class="bi mx-auto mb-1" width="16" height="16"><use xlink:href="#person1" /></svg>
+                    Giriş
+                </button>
+            </div>
+        </div>
 </form>
     </div>
-</div>
