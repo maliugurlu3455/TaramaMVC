@@ -24,7 +24,8 @@ namespace TaramaMVC.Models
         [StringLength(150)]
         public string ScholarName { get; set; } = "";
 
-    
-          
+        public int? h_endex { get; set; }
+        public int? i10_endex { get; set; }
+
     }
 }

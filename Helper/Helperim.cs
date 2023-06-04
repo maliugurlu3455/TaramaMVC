@@ -63,11 +63,12 @@ namespace TaramaMVC.Helper
             }
             return UserID;
         }
-        public static List<PersonelYayinBilgileri> KullaniciBilgileri(string users)
+        public static TempModel KullaniciBilgileri(string users)
         {
             System.Threading.Thread.Sleep(Random.Shared.Next(20000, 30000));
             HtmlDocument doc = null;
             List<PersonelYayinBilgileri> Liste = new List<PersonelYayinBilgileri>();
+            TempModel tempModel=new TempModel ();
             PersonelYayinBilgileri pers = null;
             string baslik = "";
             //string baslikUrl = "";
@@ -75,6 +76,8 @@ namespace TaramaMVC.Helper
             string alintilanma = "";
             string yil = "";
             string alintitoplam = "";
+            string h_endeks = "";
+            string i10_endex = "";
             try
             {
                 HtmlWeb web = new HtmlWeb();
@@ -109,6 +112,48 @@ namespace TaramaMVC.Helper
                 catch (Exception)
                 {
                     alintitoplam = "0";
+
+                }
+                //h-endex
+                try
+                {
+                    if (alintitoplamnod != null)
+                    {
+                        h_endeks = doc.DocumentNode.SelectNodes("//td[@class = 'gsc_rsb_std']")[2].InnerText;
+                        tempModel.h_endex = h_endeks;
+                    }
+                    else
+                    {
+                        h_endeks = "0";
+                        tempModel.h_endex = h_endeks;
+                    }
+
+                }
+                catch (Exception)
+                {
+                    h_endeks = "0";
+                    tempModel.h_endex = h_endeks;
+
+                }
+                //i10-endex
+                try
+                {
+                    if (alintitoplamnod != null)
+                    {
+                        i10_endex = doc.DocumentNode.SelectNodes("//td[@class = 'gsc_rsb_std']")[4].InnerText;
+                        tempModel.i10_endex = i10_endex;
+                    }
+                    else
+                    {
+                        i10_endex = "0";
+                        tempModel.i10_endex = i10_endex;
+                    }
+
+                }
+                catch (Exception)
+                {
+                    i10_endex = "0";
+                    tempModel.i10_endex = i10_endex;
 
                 }
                 if (nods != null)
@@ -185,6 +230,7 @@ namespace TaramaMVC.Helper
                         pers.Yil = Convert.ToInt32(yil);
                         pers.BaslikCites = baslikcites;
                         Liste.Add(pers);
+                        tempModel.personelYayinBilgileri = Liste;
                     }
 
                 }
@@ -193,9 +239,11 @@ namespace TaramaMVC.Helper
             catch (Exception ex)
             {
                 string hata = baslikcites + " - " + ex.Message;
-                Liste = null;
+                //Liste = null;
+                tempModel.personelYayinBilgileri = null;
             }
-            return Liste;
+            
+            return tempModel;
         }
 
         public static List<string> AlintiGetirSelenium(

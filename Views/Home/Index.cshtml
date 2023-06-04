@@ -1,73 +1,110 @@
-﻿
-@{
-    ViewData["Title"] = "Makale ve Alıntı Verileri";
+﻿@{
+    ViewData["Title"] = "Akademisyen Verileri";
 }
 
-@*
-<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Getir">Getir</a>*@
+
+
 <div class="container">
-    <div class="row mt-2">
-        <div class="bg-light">
-            <h4 class="text-muted">  @ViewData["Title"]</h4>
+
+   
+   
+    <div class="row row-cols-2" >
+        <div class="align-content-center" >
+            <h2 class="text-secondary mx-4" >  <svg class="bi me-2 mx-auto mb-1" width="16" height="16"><use xlink:href="#person1" /></svg> @ViewData["Title"] </h2>
+        </div>
+        <div class="text-end">
+            <a href="#" id="downloadPdf" class="btn btn-warning text-bg-secondary" onclick="downloadPdf();">
+                <svg class="bi me-2 mx-auto mb-1" width="16" height="16"><use xlink:href="#filetype-pdf" /></svg>Kaydet</a>
+
         </div>
     </div>
-    <div class="row mt-2">
-    <canvas id="teacherChart"></canvas>
+    <hr />
+    <div id="reportPage" class="row">
+        <div class="row mx-auto">
+        <canvas id="teacherChart"></canvas>
+    </div>
     </div>
 </div>
 
+
 <script type="text/javascript">
+  
     $(document).ready(function () {
+        //$('#downloadPdf').fadeOut();
+        //$('#baslikh').fadeOut(3000);
+       
         $.getJSON('/Home/ChartHepsiniGetir', function (data) {
             var ctx = $('#teacherChart');
             var labels = [];
             var articleCount = [];
             var citationCount = [];
+            var h_endexCount = [];
+            var i10_endexCount = [];
             debugger;
             //console.log("$.getJSON('/Home/ChartHepsiniGe");
-            //console.log(data);
-            
-          for (var i = 0; i < data.labels.length; i++) {
+            //console.log(data);baslikh
+
+            for (var i = 0; i < data.labels.length; i++) {
                 labels.push(data.labels[i]);
                 articleCount.push(data.alintiData[i]);
                 citationCount.push(data.quoteData[i]);
+                h_endexCount.push(data._h_endex[i]);
+                i10_endexCount.push(data._i10_endex[i]);
             }
-            //console(labels.toString()); 
-            //console(articleCount.toString()); 
+            //console(labels.toString());
+            //console(articleCount.toString());
             //console(citationCount.toString());
 
             var chartData = {
                 labels: labels,
                 datasets: [{
+
                     label: 'Alıntı Sayısı',
                     data: articleCount,
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: '#9cbfdd',
+                    borderColor: '#ffb703',
                     borderWidth: 1
                 },
                 {
                     label: 'Makale Sayısı',
                     data: citationCount,
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: '#dc3545',
+                    borderColor: '#32CD32',
                     borderWidth: 1
-                }]
+                },
+                {
+                    label: 'h-endeksi',
+                    data: h_endexCount,
+                    backgroundColor: '#ffc107',
+                    borderColor: '#f8f9fa',
+                    borderWidth: 1
+                },
+                {
+                    label: 'i10-endeksi',
+                    data: i10_endexCount,
+                    backgroundColor: '#17a2b8',
+                    borderColor: '#f8f9fa',
+                    borderWidth: 1
+                }
+
+                ]
             };
 
             var options = {
                 responsive: true,
-    plugins: {
-      title: {
-        display: true,
-        text: 'Grid Line Settings'
-      }
-    },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Grid Line Settings'
+                    }
+                },
                 scales: {
                     yAxes: [{
                         ticks: {
                             beginAtZero: true
                         }
                     }]
+
                 }
             };
 
@@ -77,6 +114,22 @@
                 options: options
             });
         });
-    });
+     
+        //$('#downloadPdf').fadeIn(6000);
+        
+        //$('#baslikh').fadeIn(1000);
+        //$('#baslikh').SlideDown(2000);
+        //$('#baslikh').SlideUp(3000);
+        //$('#baslikh').animate({ height: '150' }).fadeIn(3000).animate({ height: '80' }).fadeOut(2000).fadeIn(3000);
+
+  //      $('#baslikh').animate({
+  //  opacity: 0.25,
+  //  left: "+=50",
+  //  height: "toggle"
+  //}, 5000, function() {
+  //  // Animation complete.
+  //          $('#baslikh').animate({ height: "toggle", opacity: 1 }).fadeIn(7000)
+  //});
+   });
 
 </script>

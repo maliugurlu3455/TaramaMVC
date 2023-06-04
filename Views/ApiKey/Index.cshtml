@@ -7,13 +7,25 @@
 
 
 <div class="container md-2 mt-2">
-    <h1 class="bg-light text-secondary">@ViewData["Title"]  </h1>
-    <div class="col md-2 mt-2 text-md-end">
-       
-        <a asp-action="Create" class="btn btn-secondary">Create a Serp Api Key</a>
-        <a class="btn btn-secondary"  asp-action="Sifirla">Kullanımları Sıfırla</a>
+    <div class="row row-cols-2">
+    <div class="col text-md-start">
+    <h2 class="text-primary">
+        <img class="XNo5Ab" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAGg0lEQVR4AX2XA7Qj2RaGv3MqTkZtPo9tm23bNp4xtm17WmN7pjW2p7ne3Hb3tYKq2nM6ybo1qercf63vItl19n+0d6Lxadq4yjYzxlSOnzW66tU5I6u2/G10lf3tZ1mxbZF7Lq6Tfw6okv8OqpbzB1TLhf2r5eJ+1XJpn2q5vHe1XNmrWq7uUS3Xnlcj1xmuP7fGNmy54ZyaV288p2a8oQ0+tRgYNb1STZ5QeZIoFhjuFiU9RNPRVVgUJcqgDUoMtA55LKAj0EPgbmDBjWfXnHTL2bUqYCBsM9A1yQ3nuJqYq8BVYgChIFfhoQXvb3x/S6kRBUBM4BxMDgcZWGJgzNTKk13FLYZuBvyIAUAC74kBgpQ1gUA34BazEicD6BEzdrQxwefnkwdmkqdFLgYVmG0g3qGAS8EEfhMmF3C+MdFGu4q+ruZUUYK3xwUcwIoYwqCAcFx522Lw4qUlcSim2Kurpk13TWQ3hSOCS9AEilMNfY0Bhhhi/iV1DPvsH2LitCR/2TuEtqD/yDjnDIgTSykcKInFggNOCDP8f0nGX5Vi7NUphl2a5LCeEXSUgAmBmGGIMcCRpUso2Aj7HxBmytQUhx0RIRpTAHTqYtF7aJw+xkgoDo7yTBx2aoSBsxP8+dAQu7XVpPbSdNsvxLnTExw7OFoY1xFcg1PEdTjSGKCt/wBF44oe58bYywzil1Jw9IkR9j4ojCPgQD7hyX2jxBIKv6wwHNUnmjdxyHkRDunxG3pG2mnRhLxDBQ6wx073XS3KKRxR/P4vIRMvOEDbzpq2HTTllNhDccbEOL3+lqBHkfP+nuDcv8Ut7foOnmuwBVyhVdmOFJ8RnNbjEYGqzS5b1jp5tnqg/XdZNFTWuqxab1NOzU3CqlV2Id5SbNnssLnCoZxqtrksub6Rx85v4AnDk/9rYMF/G1j0n0Z0y+nXnoG0LTz/ZjO/bAwOmssJb7+VZtXqHFggWqird3n9uTTVlW7QbIOw9Jk0G9c5NDULTY3i0eCid1XVsGBthc3ND9bzyjtp1pjVqDBmvvw6y4MPN/Lyq83kXDzTFnz/TY6Hbm3g46UZMmkBYO33NgtubuSzd7OIZpdo0f767g1asdXhsWcbuer2Oq64qY7b7mtg5ScZsg6IDvaGdWtsnn+ymR1bXQA+X5rl+y9yOJQp2RoCh1C0V8OxCoGNaaGuyTWJBSxF2ZJdjBcBAFECVvmSbSgYCOI5Ft9D5VuxF4OveQXauDZ4Bsq3VJuCkVhckdxNYYUVNuAoIRgPDiDaM1B4TVqdnGcg2NHo2sli3IAEF83enYvn7cH8KSlOOCaaN+IgpfGGP+4dYtCIOO2LRenok6Psb0q5aP/43rPaRsgjBgEbyLrwp+4h/j1uN/qdHmfv34f4fReLow6OMH1Mkn7nxdFhrzM6wEGHhJk2K8XxJmmxd7D3ASHGzU1yzOnR8odw6rlJphgmn5dkUo8EE3fSK8HMQSn+0CWEXxGTuMcZMfYxpdgW8iZSuyv69I3Tpo3Gr0RScVb/GO26aBzxrYICPfbUBGNOSzD69ASjDCPPMJyZYH8z63JKxBX77R0qlG2gY2er1d7Rpp2m+59DOOA7hIJe9lOGZT9lWf5jlhU7+SHLp6uzpLNCa9KWatlbZYFWlJVShpBXZ0oO4X8X19n/W1TL+YvquGBhHRctqOPSp+r59v85yimbE1b9UugFaNi83WHrDpdyqqt1qahwkODNsbXjUmkL5ERaqM24LFrezPZad5ed7f3PMny9KgsaxLDDxL38dnO+1vtl2yb+nQwVG2ywAoewUgOfQ+lnPAyfrs1y5eL6/JY0ZwSAbdUuj77axEMvNdGUK16loollpkTf83gD3/+cw7YFgI0bHZ58spHXX0/jSLDcGz7XwBIgDaUtWRR8vs6YWFTXsh1Lv8qw4J0m6tMuWKWmbeDDL7Pc+XADm7e5ALz5bpp33kuTsWVXy582LNHAi8BSAM+Ed7gyDmRtAMi5UpzxrqsaxVbuOAKA7YBYXry0kDe0VBQv6o8v7VAFXAlsoCjPZWlpRYGU/17QYk7wmlGZSrvBPHfl7U+2qdIAxsRyYL5nojRR4LXgcpaAajXeJGf+3Y+1XQ6g8S7rs8AI4E0gLXjLLBRUeE3Kdk8pZ7jwftrwpihGRNx8LkoMfHxJezErsaJoYgbwGoqtonAk2F4JIt73QYpSOG5hjNcMMwwjHnqw7Yo7H2vTEvIrtdNbE1Mdu2oAAAAASUVORK5CYII=" style="height:24px;width:24px" alt="" data-atf="4" data-frt="0">
+        @ViewData["Title"]
+    </h2>
+</div>
+    <div class="col text-md-end">
+        <a asp-action="Create" class="btn btn-primary">
+                <svg class="bi me-2 mx-auto mb-1" width="16" height="16"><use xlink:href="#create1" /></svg>
+            Serp Api Key Ekle
+        </a>
+        <a class="btn btn-warning" asp-action="Sifirla">
+                <svg class="bi me-2 mx-auto mb-1" width="16" height="16"><use xlink:href="#delete1" /></svg>
+            Kullanımları Sıfırla</a>
     </div>
-    <div class="row md-2 mt-2">
+    </div>
+    <hr />
+    <div class="row md-2">
         <div class="table-responsive">
             <table class="table table-bordered table-hover table-striped table-dashboard data-table" id="tblliste">
                 <thead>

@@ -1,17 +1,28 @@
 ﻿@{
-   // Layout = null;
+    // Layout = null; file-excel
     ViewData["Title"] = "Raporlar";
 }
 
 
 <div class="container-sm" mt-2">
+    <div class="row mt-2 row-cols-2">
+        <div class="align-content-center">
+            <h2 class="text-secondary mx-4">  <svg class="bi me-2 mx-auto mb-1" width="16" height="16"><use xlink:href="#rapor" /></svg> @ViewData["Title"] </h2>
+        </div>
+        <div class="text-end">
+         
+            @*<input type="button" class="btn btn-secondary btn-sm" onclick="exportReportToExcel()" value="Export to Excel">*@
+            <a href="#" id="downloadXls" class="btn btn-warning text-bg-secondary" onclick="exportReportToExcel();">
+                <svg class="bi me-2 mx-auto mb-1" width="16" height="16"><use xlink:href="#file-excel1" /></svg>Kaydet
+            </a>
+        </div>
+    </div>
+    <hr />
     <div id="pivotoutput" class="panel panel-default md-2 mt-2">
     </div>
 </div>
 
-<div class="text-xxl-start md-2 mt-2">
-    <input type="button" class="btn btn-secondary btn-sm" onclick="exportReportToExcel()" value="Export to Excel">
-</div>
+ 
 <script>
 
     var OzetVeriler = [];
@@ -24,17 +35,21 @@
     function drawPivot() {
         console.log("drawPivot");
         $(function () {
+           
+
             $("#pivotoutput").pivotUI(OzetVeriler,
                 {
                     renderers: renderers,
                     rendererName: "Table",
-                    rows: ["anaBilimDali", "akademikPersonel"],
-                    vals: ["alinti", "citesAdeti"],
-                    aggregatorName: "Sum"
-
-                }
+                    rows: ["anaBilimDali", "akademikPersonel", "ad", "soyad", "h_endex", "i10_endex"],
+                    vals: ["alinti", "citesAdeti", "h_endex", "i10_endex"],
+                    aggregatorName: "Toplam"
+                        
+                },false,"tr"
+               
             )
         });
+
     }
 
     function getPivot() {
@@ -99,5 +114,6 @@
             });
         }
 
+       
      </script>
 }

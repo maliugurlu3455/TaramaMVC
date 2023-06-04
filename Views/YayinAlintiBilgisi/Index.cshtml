@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<TaramaMVC.Models.YayinAlintiBilgisi>
 
 @{
-    Layout = "~/Views/Shared/_Layout_x.cshtml";
+    //Layout = "~/Views/Shared/_Layout_x.cshtml";
     ViewData["Title"] = "Yayın Alıntı Bilgileri";
     int RowNo = 0;
 }
@@ -97,12 +97,12 @@
                                 {
                                     <div class="col">
                                     <div class="row md-3 mt-3">
-                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn-sm btn btn-block bg-warning">
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn-sm btn btn-block">
                                                 <svg class="bi me-2 mx-auto mb-1" width="16" height="16"><use xlink:href="#edit1" /></svg>Düzenle
                                     </a>
                                     </div>
                                         <div class="row md-3 mt-3">
-                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn-sm btn btn-block bg-danger">
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn-sm btn btn-block">
                                                 <svg class="bi me-2 mx-auto mb-1" width="16" height="16"><use xlink:href="#delete1" /></svg>Sil
                                     </a>
                                     </div>

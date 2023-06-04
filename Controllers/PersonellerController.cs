@@ -294,7 +294,8 @@ namespace TaramaMVC.Controllers
                 _context.YayinAlintiBilgisis.RemoveRange(silinecekler2);
 
                 _context.Personels.ExecuteUpdate(p => p.SetProperty(x => x.Alintilanma, x => 0));
-
+                _context.Personels.ExecuteUpdate(p => p.SetProperty(x => x.i10_endex, x => 0));
+                _context.Personels.ExecuteUpdate(p => p.SetProperty(x => x.h_endex, x => 0));
                 await _context.SaveChangesAsync();
                 MessageModel mm = new MessageModel();
                 mm.Durum = true;
@@ -313,16 +314,20 @@ namespace TaramaMVC.Controllers
         }
         public async Task<IActionResult> VeriGuncelle()
         {
-            List<PersonelYayinBilgileri> UserList = new List<PersonelYayinBilgileri>();
+            List<PersonelYayinBilgileri>? UserList = new List<PersonelYayinBilgileri>();
             //var databaseContext = _context.Personels.Where(r=>r.Name.Contains("slam")).ToList();
             var databaseContext = _context.Personels.ToList();
             foreach (var item in databaseContext)
             {
                 //web servisten kullanıcı bilgilerini al
-                UserList = Helperim.KullaniciBilgileri(item.User);
+                TempModel temptble = Helperim.KullaniciBilgileri(item.User);
+                UserList = temptble.personelYayinBilgileri;
                 var person = await _context.Personels.FirstOrDefaultAsync(i => i.Id == item.Id);
                 if (UserList != null && UserList.Count > 0)
                 {
+                    person.h_endex = Convert.ToInt32(temptble.h_endex);
+                    person.i10_endex = Convert.ToInt32(temptble.i10_endex);
+                     
                     foreach (PersonelYayinBilgileri py in UserList)
                     {
                         person.Alintilanma = py.Personel.Alintilanma;
@@ -333,6 +338,8 @@ namespace TaramaMVC.Controllers
                         await _context.PersonelYayinBilgileris.AddAsync(py);
                         _context.Personels.Update(person);
                     }
+                    _context.Personels.Update(person);
+
                     await _context.SaveChangesAsync();
                 }
 

@@ -1,16 +1,23 @@
 ﻿@model IEnumerable<TaramaMVC.Models.AnaBilimDali>
 
 @{
-    ViewData["Title"] = "AnaBilimDalları";
+    ViewData["Title"] = "Ana Bilim Dalları";
     int RowNo = 0;
 }
 <div class="container-sm">
-    <div class="d-inline-flex md-2 mt-2">
-        <a asp-action="Create" class="form-control btn btn-primary ">
+    <div class="row mt-2 md-2 row-cols-2">
+        <div class="col-6 align-content-start">
+            <h2 class="text-primary mx-4">  <svg class="bi me-2 mx-auto mb-1" width="24" height="24"><use xlink:href="#departman"></use></svg> @ViewData["Title"] </h2>
+        </div>
+
+        <div class="col text-end align-content-end">
+        <a asp-action="Create" class="btn btn-primary ">
             <svg class="bi me-2 mx-auto mb-1" width="16" height="16"><use xlink:href="#create1" /></svg>
             Yeni Kayıt
         </a>
+        </div>
     </div>
+    <hr />
     <div class="table-responsive md-2 mt-2">
         <table class="table table-bordered table-hover table-striped align-center">
             <thead class="table-light">

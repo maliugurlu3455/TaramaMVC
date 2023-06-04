@@ -3,15 +3,22 @@
     ViewData["Title"] = "Roller";
 }
 <div class="container">
-    <div class="row md-2 mt-2">
-        <h1 class="bg-info text-white">Roller</h1>
+
+    <div class="row mt-2 md-2 row-cols-2">
+        <div class="col-6 align-content-start">
+            <h2 class="text-primary mx-4">  <svg class="bi me-2 mx-auto mb-1" width="24" height="24"><use xlink:href="#person1"></use></svg> @ViewData["Title"] </h2>
+        </div>
+
+        <div class="col text-end align-content-end">
+            <a asp-action="Create" class="btn btn-primary">
+                <svg class="bi me-2 mx-auto mb-1" width="16" height="16"><use xlink:href="#create1" /></svg>
+                Rol Ekle
+            </a>
+        </div>
        
     </div>
-    <div class="col md-2 mt-2 ">
 
-        <a asp-action="Create" class="btn btn-primary">Create a Role</a>
-      
-    </div>
+    <hr />
     <div class="row md-2 mt-2">
     <div class="table-responsive">
 <table id="tblliste" class="table table-bordered table-hover table-striped">

@@ -1,34 +1,45 @@
 ﻿@model IEnumerable<TaramaMVC.Models.Personel>
 
 @{
-    Layout = "~/Views/Shared/_Layout_x.cshtml";
+    //Layout = "~/Views/Shared/_Layout_x.cshtml";
     ViewData["Title"] = "Akademik Personeller";
     int RowNo = 0;
 
 }
 
 <div class="container-sm">
-     
+    <div class="row">
+
+        <div class="col-6 text-md-start">
+            <h2 class="text-primary">  <svg class="bi me-2 mx-auto mb-1" width="16" height="16"><use xlink:href="#person" /></svg> @ViewData["Title"] </h2>
+        </div>
     @if (User?.Identity?.IsAuthenticated ?? false)
     {
-            <div class="mt-1 text-md-end">
-                <a class="btn btn-warning" asp-area="" asp-controller="Personeller" asp-action="VeriGuncelle">
+
+       
+           <div class="col-6 text-md-end">
+                        <a class="btn btn-warning" asp-area="" asp-controller="Personeller" asp-action="VeriGuncelle">
                     <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#download" /></svg>
                     
                     Yayınları Getir</a>
+               
                 <a class="btn btn-danger" asp-area="" asp-controller="Personeller" asp-action="VerileriSil">
                     <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#delete1" /></svg>
                     Yayınları Sil</a>
+                      
                 <a class="btn btn-danger" asp-area="" asp-controller="Personeller" asp-action="AlintiVerileriSil">
                     <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#delete2" /></svg>
                     Alıntıları Sil</a>
-            <a asp-action="Create" class="btn btn-primary ">
-                    <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#create1" /></svg>
-                Yeni Akademisyen Ekle
-            </a>
-        </div>
+                     
+                <a asp-action="Create" class="btn btn-primary ">
+                        <svg class="bi d-block mx-auto mb-1" width="16" height="16"><use xlink:href="#create1" /></svg>
+                    Yeni Akademisyen
+                </a>
+                </div>
+       
+    
     }
- 
+        </div>    <hr />
 <div class="row">
       
             <div class="col">
@@ -57,6 +68,12 @@
                                 <th>
                                     @Html.DisplayNameFor(model => model.Alintilanma)
                                 </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.h_endex)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.i10_endex)
+                            </th>
                                 @* <th>
                                 @Html.DisplayNameFor(model => model.ApiKey)
                                 </th>*@
@@ -91,6 +108,12 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Alintilanma)
                                     </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.h_endex)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.i10_endex)
+                                </td>
                                     @* <td>
                                 @if(item.ApiKey.Length>0)
                                 {

@@ -163,7 +163,7 @@ namespace TaramaMVC.Controllers
                 for (int i = 0; i < apiKey.Count; i++)
                 {
                     var api = apiKey[i];
-                    api.Sayi = 100;
+                    api.Sayi = 0;
                     api.IsTamam = false;
                     _context.ApiKey.Update(api);
                 }
