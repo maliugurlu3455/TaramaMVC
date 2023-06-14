@@ -34,6 +34,12 @@ namespace TaramaMVC.Controllers
 
             return View(await databaseContext.ToListAsync());
         }
+        public async Task<IActionResult> FindIndex()
+        {
+            var databaseContext = _context.Personels.OrderByDescending(t => t.Alintilanma).Include(p => p.AnaBilimDallari);
+
+            return View(await databaseContext.ToListAsync());
+        }
 
         // GET: Personeller/Details/5
         ////[Authorize]
@@ -857,24 +863,23 @@ namespace TaramaMVC.Controllers
             string urll = "";
             string url = "";
             /**/
-            HtmlDocument doc = null;
+            HtmlDocument doc = null;int sayac1 = 0;
             /**/
             var Pyb = await _context.PersonelYayinBilgileris.Where(r => r.Alinti > 0 && r.PersonelId == id).ToListAsync();
             if (Pyb != null && Pyb.Count > 0)
             {
                 foreach (var pyb in Pyb)
                 {
+                    sayac1++;
                     //https://scholar.google.com/scholar?as_ylo=2019&hl=tr&as_sdt=2005&sciodt=0,5&cites=1231811585781593305&scipsc=
                     //link
                     //https://scholar.google.com/scholar?hl=tr&as_sdt=2005&sciodt=0%2C5&cites=4986682506114850678&scipsc=&as_ylo=2019&as_yhi=2023
-                    for (int t = 2022; t < DateTime.Now.Year + 1
-                        ; t++)
-                    {
 
-                        System.Threading.Thread.Sleep(Random.Shared.Next(30001 + t));
+
+                        System.Threading.Thread.Sleep(Random.Shared.Next(20001 + sayac1));
                         //doc = await TaramaMVC.Helper.Helperim.GetPageYeni(pyb.BaslikCites + "&as_ylo=2022&start=" + t.ToString());
                         urll = TaramaMVC.Helper.Helperim.UrltoCites(pyb.BaslikCites);
-                        url = string.Format("https://scholar.google.com/scholar?hl=tr&as_sdt=2005&sciodt=0%2C5&cites={0}&scipsc=&as_ylo={1}&as_yhi={2}", urll, t, t + 1);
+                        url = string.Format("https://scholar.google.com/scholar?hl=tr&as_sdt=2005&sciodt=0%2C5&cites={0}&scipsc=&as_ylo={1}", urll, 2023);
                         //url = string.Format("https://scholar.google.com/scholar?as_ylo={1}&hl=tr&as_sdt=2005&sciodt=0,5&cites={0}&scipsc=", urll, t);
                         doc = TaramaMVC.Helper.Helperim.GetPage(url);
 
@@ -978,7 +983,7 @@ namespace TaramaMVC.Controllers
 
                         }
 
-                    }
+                    
                 }
                 //await _context.SaveChangesAsync();
                 // return Content(doc.Text, System.Net.Mime.MediaTypeNames.Text.Html, Encoding.GetEncoding("iso-8859-9"));

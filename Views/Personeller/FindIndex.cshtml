@@ -1,0 +1,106 @@
+﻿
+@{
+    //Layout = "";//"~/Views/Shared/_Layout_x.cshtml";
+    ViewData["Title"] = "Yeni Akademik Personel";
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+}
+
+<div class="container-sm">
+    <div class="row">
+
+        <div class="col-6 text-md-start">
+            <h2 class="text-primary">  <svg class="bi me-2 mx-auto mb-1" width="16" height="16"><use xlink:href="#person" /></svg> @ViewData["Title"] </h2>
+        </div>
+    @if (User?.Identity?.IsAuthenticated ?? false)
+    {
+
+            <div class="input-group">
+                <input id="txtara" type="text" class="form-control" placeholder="Aranılacak Akademik Personel" aria-label="Aranılacak Akademik Personel">
+                <button class="btn btn-outline-primary" type="button" id="btnara"><svg class="bi me-2 mx-auto mb-1" width="16" height="16"><use xlink:href="#view2" /></svg> ARA </button>
+            </div>
+           
+    
+    }
+        </div>    <hr />
+    <div class="row" id="result">
+      
+         
+
+    </div>
+
+    
+</div>
+
+
+
+<script type="text/javascript" >
+    const headers = new Headers({
+
+        authority: 'scholar.google.com',
+        method: 'GET',
+        //scheme: 'https'
+        //accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+        //accept-encoding: 'gzip, deflate, br',
+        //accept-language: 'tr,en;q=0.9,en-GB;q=0.8,en-US;q=0.7',
+        //cache-control: 'no-cache',
+        //pragma: 'no-cache',
+        //sec-ch-ua-model: '',
+        //sec-ch-ua-platform: 'Windows',
+        //sec-ch-ua-platform-version: '10.0.0',
+        //sec-ch-ua-wow64: '? 0',
+        //sec-fetch-dest: 'document',
+        //sec-fetch-mode: 'navigate',
+        //sec-fetch-site: 'none',
+        //sec-fetch-user: '?1',
+        //upgrade-insecure-requests: '1',
+        //user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36',
+        mode: "no-cors"
+    });
+    $("#btnara").on("click", function () { myFunction(); });
+
+       
+    function myFunction(){
+        var deger = $("#txtara").val();
+         newwindow = window.open("https://scholar.google.com/citations?hl=tr&view_op=search_authors&mauthors=" + deger + "& btnG=", "windowName", 'height=300,width=400');
+        if (window.focus) { newwindow.focus() }
+        var doc = document.body.innerHTML;
+        newwindow.returnValue = newwindow.document.body.innerHTML;
+        alert(doc);
+        //popitup("https://scholar.google.com/citations?hl=tr&view_op=search_authors&mauthors=" + deger + "& btnG=")
+        /*
+        fetch("https://scholar.google.com/citations?hl=tr&view_op=search_authors&mauthors=" + deger + "& btnG=", { headers })
+            .then(response =>console.log( response.text()))
+            .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                console.log(doc);
+                divTags.forEach(div => {
+                    document.getElementById('result').innerHTML += doc; //div.innerHTML;
+                });
+            })
+            .catch(error => {
+                console.log(error);
+                    
+            });
+
+            */
+      //  $.get("https://scholar.google.com/citations?hl=tr&view_op=search_authors&mauthors=" + deger +"& btnG=", function (data) {
+            //$(".result").html(data);
+            //alert("Load was performed.");
+       
+    }
+           
+    function popitup(url, windowName) {
+        newwindow = window.open(url, windowName, 'height=300,width=400');
+        if (window.focus) { newwindow.focus() }
+        return false;
+    }
+     
+</script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

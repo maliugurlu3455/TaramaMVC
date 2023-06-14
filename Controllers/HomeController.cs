@@ -39,7 +39,7 @@ namespace TaramaMVC.Controllers
         }
         //[ResponseCache(Duration = 20, Location = ResponseCacheLocation.None, NoStore = true)] 
         [HttpGet]
-        [ResponseCache(VaryByHeader = "User-Agent", Duration = 30)]
+        [ResponseCache(VaryByHeader = "User-Agent", Duration = 20)]
         public async Task<JsonResult>  HepsiniGetir()
         {
             var users =await (from k in  _context.PersonelYayinBilgileris join 
@@ -68,7 +68,7 @@ namespace TaramaMVC.Controllers
             return Json(users);
         }
         [HttpGet]
-        [ResponseCache(VaryByHeader = "User-Agent", Duration = 30)] // 30 dk boyunca cache den oku
+        [ResponseCache(VaryByHeader = "User-Agent", Duration = 20)] // 30 dk boyunca cache den oku
         public async Task<JsonResult> ChartHepsiniGetir()
         {
             var academicData = await (from k in _context.PersonelYayinBilgileris

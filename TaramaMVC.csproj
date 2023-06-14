@@ -6,8 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <OutputType>Exe</OutputType>
     <Nullable>enable</Nullable>
-    <AssemblyVersion>1.0.0.3</AssemblyVersion>
-    <FileVersion>1.0.0.3</FileVersion>
+    <AssemblyVersion>1.0.0.4</AssemblyVersion>
+    <FileVersion>1.0.0.4</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -39,7 +39,7 @@
 
   <ItemGroup>
     <PackageReference Include="google-search-results-dotnet" Version="2.0.1" />
-    <PackageReference Include="GoogleApi" Version="5.0.0" />
+    <PackageReference Include="GoogleApi" Version="5.0.2" />
     <PackageReference Include="HtmlAgilityPack.CssSelector.Core" Version="1.0.1" />
     <PackageReference Include="HtmlAgilityPackCore" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
